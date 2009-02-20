@@ -1,1 +1,13 @@
 Simple feed aggregator + search, focusing on developer / academic blogs.
+
+A database for your entries will be created in db/aggir.db at initial launch.
+
+Requirements :
+
+Feedzirra ( http://github.com/pauldix/feedzirra/tree/master )
+Shoulda
+Sequel
+SQLite3
+Solr ( http://lucene.apache.org/solr/ )
+
+
