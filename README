@@ -5,9 +5,9 @@ A database for your entries will be created in db/aggir.db at initial launch.
 Requirements :
 
 Feedzirra ( http://github.com/pauldix/feedzirra/tree/master )
-Shoulda
-Sequel
-SQLite3
+Shoulda ( http://thoughtbot.com/projects/shoulda )
+Sequel ( http://sequel.rubyforge.org )
+SQLite3 ( http://www.sqlite.org/ )
 Solr ( http://lucene.apache.org/solr/ )
 
 

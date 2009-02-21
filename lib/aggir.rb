@@ -12,7 +12,8 @@ if DB.tables.empty?
   require 'migrations/run'
 end
  
-#require 'aggir/entry'
+ 
+%w(feed entry).each {|f| require "aggir/#{f}"}
  
 module Aggir
   VERSION = '0.0.1'
