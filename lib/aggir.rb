@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sequel'
+require 'rfeedparser'
 
 db_name = File.join(File.dirname(__FILE__) + '/../db', "aggir.db")
 DB = Sequel.sqlite(db_name)
