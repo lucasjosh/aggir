@@ -21,6 +21,14 @@ class FeedTest < Test::Unit::TestCase
       assert_not_nil feed
     end
     
+    should "save correct data from Feed" do
+      feed = Aggir::Feed.create_or_update("http://www.lucasjosh.com/blog/feed/")
+      assert_not_nil feed
+      assert_equal "lucasjosh.com", feed.title
+      assert_equal "http://lucasjosh.com/blog", feed.url
+      assert_equal "http://www.lucasjosh.com/blog/feed/", feed.feed_url
+    end
+    
     teardown { db_clean_up }
   end
 

@@ -8,6 +8,7 @@ require 'aggir'
 
 db_name = File.join(File.dirname(__FILE__) + '/../db', "aggir_test.db")
 DB = Sequel.sqlite
+
 # 
 def db_setup
   
