@@ -3,13 +3,12 @@ require 'sequel'
 require 'test/unit'
 require 'shoulda'
 
+DB = Sequel.sqlite
+
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 require 'aggir'
 
-db_name = File.join(File.dirname(__FILE__) + '/../db', "aggir_test.db")
-DB = Sequel.sqlite
-
-# 
+ 
 def db_setup
   
   if DB.tables.empty?

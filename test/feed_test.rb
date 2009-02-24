@@ -1,9 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/test_helper')
 
-class Aggir::Feed 
-  self.db = DB
-end
-
 class FeedTest < Test::Unit::TestCase
 
   context "Basic Aggir::Feed" do

@@ -3,7 +3,7 @@ require 'sequel'
 require 'rfeedparser'
 
 db_name = File.join(File.dirname(__FILE__) + '/../db', "aggir.db")
-DB = Sequel.sqlite(db_name)
+DB = Sequel.sqlite(db_name) unless defined?(DB)
  
 $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
