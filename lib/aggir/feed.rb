@@ -1,5 +1,6 @@
 module Aggir
   class Feed < Sequel::Model
+    one_to_many :entries#, :class => Aggir::Entry
     
     class << self
       def create_or_update(f)
