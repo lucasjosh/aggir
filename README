@@ -5,9 +5,10 @@ A database for your entries will be created in db/aggir.db at initial launch.
 Requirements :
 
 rfeedparser ( http://github.com/jmhodges/rfeedparser/tree/master )
-Shoulda ( http://thoughtbot.com/projects/shoulda )
 Sequel ( http://sequel.rubyforge.org )
 SQLite3 ( http://www.sqlite.org/ )
 Solr ( http://lucene.apache.org/solr/ )
 
-
+For Testing:
+Shoulda ( http://thoughtbot.com/projects/shoulda )
+FlexMock

@@ -14,7 +14,8 @@ if DB.tables.empty?
 end
  
  
-%w(feed entry).each {|f| require "aggir/#{f}"}
+require File.dirname(__FILE__) + '/aggir/feed' unless defined?(Aggir::Feed)
+require File.dirname(__FILE__) + '/aggir/entry' unless defined?(Aggir::Entry)
  
 module Aggir
   VERSION = '0.0.1'

@@ -28,6 +28,7 @@ module Aggir
         datetime :published
         datetime :created
         integer :feed_id
+        varchar :guid
       end      
       
     end

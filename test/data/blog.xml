@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	>
+
+<channel>
+	<title>lucasjosh.com</title>
+	<atom:link href="http://lucasjosh.com/blog/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lucasjosh.com/blog</link>
+	<description></description>
+	<pubDate>Fri, 06 Feb 2009 17:17:52 +0000</pubDate>
+
+	<generator>http://wordpress.org/?v=2.6</generator>
+	<language>en</language>
+			<item>
+		<title>EarthLink, Short Term Profit but Long Term?</title>
+		<link>http://lucasjosh.com/blog/2009/02/06/earthlink-short-term-profit-but-long-term/</link>
+		<comments>http://lucasjosh.com/blog/2009/02/06/earthlink-short-term-profit-but-long-term/#comments</comments>
+
+		<pubDate>Fri, 06 Feb 2009 17:17:52 +0000</pubDate>
+		<dc:creator>josh</dc:creator>
+		
+		<category><![CDATA[EarthLink]]></category>
+
+		<category><![CDATA[Work]]></category>
+
+		<guid isPermaLink="false">http://lucasjosh.com/blog/?p=260</guid>
+		<description><![CDATA[I worked for EarthLink three different times so it always holds a special place in my heart.  It is tough to read things like this though.  With all the cuts they&#8217;ve done, they were profitable in 2008 but really what does the future hold?
+I&#8217;ve talked to the few people still there and it [...]]]></description>
+
+			<content:encoded><![CDATA[<p>I worked for <a href="http://www.earthlink.net">EarthLink</a> three different times so it always holds a special place in my heart.  It is tough to read <a href="http://news.cnet.com/8301-1023_3-10157670-93.html?part=rss&#038;subj=news&#038;tag=2547-1_3-0-20">things like this</a> though.  With all the cuts they&#8217;ve done, they were profitable in 2008 but really what does the future hold?</p>
+<p>I&#8217;ve talked to the few people still there and it really is just a skeleton operation technically and eventually that will need to be cut.  It really is too bad since there was always so much promise but really not as much execution.</p>
+<blockquote><p>
+All of this leaves EarthLink without a clear growth strategy. Once dial-up dies off, the company has no wireless or fixed infrastructure of its own to offer competing services. And even though cost-cutting has helped the company return to profitability, it won&#8217;t help solve the company&#8217;s fundamental problem, which is a lack of future strategy.
+</p></blockquote>
+]]></content:encoded>
+			<wfw:commentRss>http://lucasjosh.com/blog/2009/02/06/earthlink-short-term-profit-but-long-term/feed/</wfw:commentRss>
+		</item>
+		<item>
+		<title>The Numerati</title>
+		<link>http://lucasjosh.com/blog/2009/02/03/the-numerati/</link>
+		<comments>http://lucasjosh.com/blog/2009/02/03/the-numerati/#comments</comments>
+
+		<pubDate>Tue, 03 Feb 2009 16:26:54 +0000</pubDate>
+		<dc:creator>josh</dc:creator>
+		
+		<category><![CDATA[Books]]></category>
+
+		<category><![CDATA[TheNumerati]]></category>
+
+		<guid isPermaLink="false">http://lucasjosh.com/blog/?p=258</guid>
+		<description><![CDATA[If asked for a list of books which give a basic overview of the things I do as a coder, I usually suggest Microserfs, Hackers and Painters and maybe something like The Cathedral and the Bazaar.  Now though, I think I&#8217;ll add The Numerati to that list.  It isn&#8217;t that my work makes [...]]]></description>
+
+			<content:encoded><![CDATA[<p>If asked for a list of books which give a basic overview of the things I do as a coder, I usually suggest <i>Microserfs</i>, <i>Hackers and Painters</i> and maybe something like The Cathedral and the Bazaar.  Now though, I think I&#8217;ll add <a href="http://thenumerati.net/index.cfm?catID=18"><i>The Numerati</i></a> to that list.  It isn&#8217;t that my work makes me one of the Numerati but it does give a view of how the world is changing and what sorts of things computer systems will be handing in the future.</p>
+<p>I enjoyed this book quite a bit.  My only quibble was the lack of real <i>meat</i> in the discussion about the math and the systems but it&#8217;s understandable since this was a book for the mainstream not geeks like me.</p>
+<p>The ability to take large amounts of data and analyze it would seem to be something only companies would be able to do but I think individuals can do their own now.  You could use the combination of EC2, <a href="http://hadoop.apache.org">Hadoop</a> and <a href="http://lucene.apache.org/mahout/">Mahout</a> and become a Numerati yourself.</p>
+]]></content:encoded>
+			<wfw:commentRss>http://lucasjosh.com/blog/2009/02/03/the-numerati/feed/</wfw:commentRss>
+		</item>
+		<item>
+		<title>The McGwire Brothers</title>
+		<link>http://lucasjosh.com/blog/2009/01/22/the-mcgwire-brothers/</link>
+		<comments>http://lucasjosh.com/blog/2009/01/22/the-mcgwire-brothers/#comments</comments>
+
+		<pubDate>Thu, 22 Jan 2009 21:05:16 +0000</pubDate>
+		<dc:creator>josh</dc:creator>
+		
+		<category><![CDATA[Me]]></category>
+
+		<guid isPermaLink="false">http://lucasjosh.com/blog/?p=256</guid>
+		<description><![CDATA[Deadspin posted about Mark McGwire&#8217;s brother shopping around a book proposal, showing the truth about his use of steroids and how his brother, Jay, was the first to inject him.
+This is pretty weird for me because I played football with Jay when he was a senior and I was a junior.  There was always [...]]]></description>
+			<content:encoded><![CDATA[<p><a href="http://deadspin.com/5136177/mark-mcgwires-one+eyed-baby-brother-reveals-the-not+so+startling-truth">Deadspin posted about Mark McGwire&#8217;s brother</a> shopping around a book proposal, showing the truth about his use of steroids and how his brother, Jay, was the first to inject him.</p>
+<p>This is pretty weird for me because I played football with Jay when he was a senior and I was a junior.  There was always little bits of chatter about his strength and workout routine and some speculated he was getting <i>help</i>.</p>
+<p>It&#8217;s a crazy, connected world sometimes.</p>
+]]></content:encoded>
+			<wfw:commentRss>http://lucasjosh.com/blog/2009/01/22/the-mcgwire-brothers/feed/</wfw:commentRss>
+
+		</item>
+		<item>
+		<title>The New Marching Orders</title>
+		<link>http://lucasjosh.com/blog/2009/01/20/the-new-marching-orders/</link>
+		<comments>http://lucasjosh.com/blog/2009/01/20/the-new-marching-orders/#comments</comments>
+		<pubDate>Wed, 21 Jan 2009 06:12:41 +0000</pubDate>
+		<dc:creator>josh</dc:creator>
+
+		
+		<category><![CDATA[Me]]></category>
+
+		<guid isPermaLink="false">http://lucasjosh.com/blog/?p=253</guid>
+		<description><![CDATA[
+Now, there are some who question the scale of our ambitions &#8212; who suggest that our system cannot tolerate too many big plans. Their memories are short. For they have forgotten what this country has already done; what free men and women can achieve when imagination is joined to common purpose, and necessity to courage.
+
+Such [...]]]></description>
+			<content:encoded><![CDATA[<blockquote><p>
+Now, there are some who question the scale of our ambitions &#8212; who suggest that our system cannot tolerate too many big plans. Their memories are short. For they have forgotten what this country has already done; what free men and women can achieve when imagination is joined to common purpose, and necessity to courage.
+</p></blockquote>
+<p><a href="http://latimesblogs.latimes.com/washington/2009/01/inaugural-speec.html">Such an amazing speech!</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://lucasjosh.com/blog/2009/01/20/the-new-marching-orders/feed/</wfw:commentRss>
+		</item>
+		<item>
+
+		<title>National Day of Service</title>
+		<link>http://lucasjosh.com/blog/2009/01/17/national-day-of-service/</link>
+		<comments>http://lucasjosh.com/blog/2009/01/17/national-day-of-service/#comments</comments>
+		<pubDate>Sun, 18 Jan 2009 07:20:13 +0000</pubDate>
+		<dc:creator>josh</dc:creator>
+		
+		<category><![CDATA[Me]]></category>
+
+		<guid isPermaLink="false">http://lucasjosh.com/blog/?p=250</guid>
+		<description><![CDATA[Somehow I missed Monday is being changed from just a holiday to a day of service.  Unfortunately, I have to work but perhaps I can still figure out a way to get involved.
+Seth Godin put together a great list of possible ways to make an impact in the world.
+Obie and the crew at Hashrocket [...]]]></description>
+			<content:encoded><![CDATA[<p>Somehow I missed <a href="http://www.usaservice.org/content/home/">Monday is being changed</a> from just a holiday to a day of service.  Unfortunately, I have to work but perhaps I can still figure out a way to get involved.</p>
+<p>Seth Godin <a href="http://sethgodin.typepad.com/seths_blog/2009/01/national-day-of.html">put together a great list</a> of possible ways to make an impact in the world.</p>
+<p>Obie and the crew at Hashrocket <a href="http://blog.obiefernandez.com/content/2009/01/getting-our-national-service-groove-on-with-apps-for-america.html">are going to build</a> things for the <a href="http://sunlightlabs.com/appsforamerica/">Apps for America</a> contest.  </p>
+<p>I don&#8217;t know what I&#8217;m going to do but I want it to be meaningful whether that is Monday or beyond.</p>
+]]></content:encoded>
+			<wfw:commentRss>http://lucasjosh.com/blog/2009/01/17/national-day-of-service/feed/</wfw:commentRss>
+		</item>
+		<item>
+		<title>Flow Chart for Data Visualization</title>
+
+		<link>http://lucasjosh.com/blog/2009/01/15/flow-chart-for-data-visualization/</link>
+		<comments>http://lucasjosh.com/blog/2009/01/15/flow-chart-for-data-visualization/#comments</comments>
+		<pubDate>Thu, 15 Jan 2009 15:21:17 +0000</pubDate>
+		<dc:creator>josh</dc:creator>
+		
+		<category><![CDATA[Data]]></category>
+
+		<guid isPermaLink="false">http://lucasjosh.com/blog/?p=245</guid>
+
+		<description><![CDATA[When you are wondering how best to show data, use this flow chart.  [via]
+]]></description>
+			<content:encoded><![CDATA[<p>When you are wondering how best to show data, <a href="http://www.flickr.com/photos/amit-agarwal/3196386402/sizes/l/">use this flow chart</a>.  [<a href="http://flowingdata.com/2009/01/15/flow-chart-shows-you-what-chart-to-use/">via</a>]</p>
+]]></content:encoded>
+			<wfw:commentRss>http://lucasjosh.com/blog/2009/01/15/flow-chart-for-data-visualization/feed/</wfw:commentRss>
+		</item>
+		<item>
+		<title>2009: The Year of LinkedIn</title>
+		<link>http://lucasjosh.com/blog/2009/01/13/2009-the-year-of-linkedin/</link>
+
+		<comments>http://lucasjosh.com/blog/2009/01/13/2009-the-year-of-linkedin/#comments</comments>
+		<pubDate>Wed, 14 Jan 2009 05:56:39 +0000</pubDate>
+		<dc:creator>josh</dc:creator>
+		
+		<category><![CDATA[Work]]></category>
+
+		<guid isPermaLink="false">http://lucasjosh.com/blog/?p=242</guid>
+		<description><![CDATA[In the current economic struggles, I think a site like LinkedIn is going to become more and more important.  Sarah Lacy posts about this with the view of how LinkedIn&#8217;s engagement is going to up since more people will be looking for work and using their social contacts to find work.  
+]]></description>
+
+			<content:encoded><![CDATA[<p>In the current economic struggles, I think a site like <a href="http://www.linkedin.com">LinkedIn</a> is going to become more and more important.  Sarah Lacy <a href="http://www.sarahlacy.com/sarahlacy/2009/01/prediction-linkedin-engagement-metrics-set-to-soar.html">posts about this</a> with the view of how LinkedIn&#8217;s engagement is going to up since more people will be looking for work and using their social contacts to find work.  </p>
+]]></content:encoded>
+			<wfw:commentRss>http://lucasjosh.com/blog/2009/01/13/2009-the-year-of-linkedin/feed/</wfw:commentRss>
+		</item>
+		<item>
+		<title>Starting a Newspaper</title>
+		<link>http://lucasjosh.com/blog/2009/01/12/starting-a-newspaper/</link>
+		<comments>http://lucasjosh.com/blog/2009/01/12/starting-a-newspaper/#comments</comments>
+
+		<pubDate>Mon, 12 Jan 2009 14:46:54 +0000</pubDate>
+		<dc:creator>josh</dc:creator>
+		
+		<category><![CDATA[LATimes]]></category>
+
+		<category><![CDATA[Newspapers]]></category>
+
+		<guid isPermaLink="false">http://lucasjosh.com/blog/?p=238</guid>
+		<description><![CDATA[Seth Godin writes about he would start a newspaper with roughly six people or so.  What about the institutions that have many more people already writing for publication?  
+When I was at The Times, a few of us had this idea, trying to capitalize on everyone&#8217;s belief that focusing on local news is [...]]]></description>
+
+			<content:encoded><![CDATA[<p>Seth Godin <a href="http://sethgodin.typepad.com/seths_blog/2009/01/time-to-start-a.html">writes about he would start a newspaper</a> with roughly six people or so.  What about the institutions that have many more people already writing for publication?  </p>
+<p>When I was at <a href="http://www.latimes.com">The Times</a>, a few of us had this idea, trying to capitalize on everyone&#8217;s belief that focusing on local news is the way for a newspaper to survive.  Since everyone lives in a neighborhood, why not use that for the beats?  Make sure everyone has a laptop which can handle the reporting as well as any video / photo editing that needs to happen as well as a camera which can also do video.</p>
+<p>Editors should lay down the law that anyone seen in the office more than once a week would be in serious trouble.  Instead, they should be talking to local businesses about what&#8217;s going on, interviewing local high school athletes and becoming a known entity at all city meetings.  This would allow for local stories to be reported on in a much different way.  Blogs could be started for cities that would become must-reads for everyone involved.  A few times a week, have blog entries reverse-published into the print edition but overall make everything focused on the Web.</p>
+<p>Would this work?  Would this save a newspaper?  Who knows but really at this point, what do they have to lose?</p>
+]]></content:encoded>
+			<wfw:commentRss>http://lucasjosh.com/blog/2009/01/12/starting-a-newspaper/feed/</wfw:commentRss>
+		</item>
+		<item>
+		<title>New Year, New Hope and New Challenges</title>
+		<link>http://lucasjosh.com/blog/2009/01/04/new-year-new-hope-and-new-challenges/</link>
+		<comments>http://lucasjosh.com/blog/2009/01/04/new-year-new-hope-and-new-challenges/#comments</comments>
+
+		<pubDate>Sun, 04 Jan 2009 23:24:56 +0000</pubDate>
+		<dc:creator>josh</dc:creator>
+		
+		<category><![CDATA[Me]]></category>
+
+		<guid isPermaLink="false">http://lucasjosh.com/blog/?p=236</guid>
+		<description><![CDATA[Tomorrow I start employment at YellowPages.com / AT&#038;T Interactive.  Though I&#8217;m very excited and can&#8217;t wait to get started, there is still plenty of sadness and disappointment about leaving The Times.
+If someone were to ask me exactly why I was leaving, I couldn&#8217;t do much better than pointing them to this post by Jeff [...]]]></description>
+			<content:encoded><![CDATA[<p>Tomorrow I start employment at <a href="http://www.yellowpages.com">YellowPages.com / AT&#038;T Interactive</a>.  Though I&#8217;m very excited and can&#8217;t wait to get started, there is still plenty of sadness and disappointment about leaving <a href="http://www.latimes.com">The Times</a>.</p>
+<p>If someone were to ask me exactly why I was leaving, I couldn&#8217;t do much better than pointing them to <a href="http://www.codinghorror.com/blog/archives/001198.html">this post by Jeff Atwood</a> and drilling down to this quote:</p>
+<blockquote><p>
+Also, having programmers who believe that their employers actually give a damn about them is probably a good business strategy for companies that actually want to be around five or ten years from now.
+</p></blockquote>
+<p>I could go on and on, citing specific examples but really what would be the point?  I&#8217;d burn bridges and embarrass the people I know and respect who are still there.  That&#8217;s really not my style.</p>
+<p>Instead I&#8217;ll just say I had an amazing time while working for <a href="http://www.latimes.com">The Times</a> and I&#8217;m very proud of the work we did for <a href="http://topics.latimes.com">Topics</a> and the <a href="http://articles.latimes.com">Archives</a>.  Those will hopefully stay around and benefit the world at large.</p>
+<p>But that&#8217;s all in the past now.  Tomorrow is a new day, filled with new challenges.</p>
+]]></content:encoded>
+			<wfw:commentRss>http://lucasjosh.com/blog/2009/01/04/new-year-new-hope-and-new-challenges/feed/</wfw:commentRss>
+
+		</item>
+		<item>
+		<title>Wrigley on Ice</title>
+		<link>http://lucasjosh.com/blog/2008/12/31/wrigley-on-ice/</link>
+		<comments>http://lucasjosh.com/blog/2008/12/31/wrigley-on-ice/#comments</comments>
+		<pubDate>Wed, 31 Dec 2008 19:56:49 +0000</pubDate>
+		<dc:creator>josh</dc:creator>
+
+		
+		<category><![CDATA[Chicago]]></category>
+
+		<category><![CDATA[Sports]]></category>
+
+		<guid isPermaLink="false">http://lucasjosh.com/blog/2008/12/31/wrigley-on-ice/</guid>
+		<description><![CDATA[
+Tomorrow at 10AM Pacific, I&#8217;ll be glued to the set, watching the Blackhawks battle the hated Red Wings.&#160; I&#8217;m pretty excited to watch this game though I did try everything possible to get back to Chicago for it.&#160; By not going though, I&#8217;m able to watch with the kids and that&#8217;ll be much, much better.
+]]></description>
+			<content:encoded><![CDATA[<p><img src="http://latimesblogs.latimes.com/photos/uncategorized/2008/12/31/wrigley_field.jpg" width="400" /></p>
+<p>Tomorrow at 10AM Pacific, I&#8217;ll be glued to the set, watching the Blackhawks battle the hated Red Wings.&nbsp; I&#8217;m pretty excited to watch this game though I did try everything possible to get back to Chicago for it.&nbsp; By not going though, I&#8217;m able to watch with the kids and that&#8217;ll be much, much better.</p>
+]]></content:encoded>
+			<wfw:commentRss>http://lucasjosh.com/blog/2008/12/31/wrigley-on-ice/feed/</wfw:commentRss>
+		</item>
+
+	</channel>
+</rss>

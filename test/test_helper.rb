@@ -3,6 +3,8 @@ require 'sequel'
 require 'test/unit'
 require 'shoulda'
 
+require 'flexmock/test_unit'
+
 DB = Sequel.sqlite
 
 $:.unshift(File.dirname(__FILE__) + '/../lib')
@@ -19,5 +21,12 @@ def db_setup
 end
 
 def db_clean_up
+  DB.disconnect
+end
+
+def setup_feed_data
+  str = open(File.join('data', 'blog.xml')).read
+  data = FeedParser.parse(str)
+  flexmock(FeedParser).should_receive(:parse).and_return(data)
 end
 

@@ -1,6 +1,7 @@
 module Aggir
   class Feed < Sequel::Model
-    one_to_many :entries#, :class => Aggir::Entry
+    
+    one_to_many :entries, :class => "Aggir::Entry"
     
     class << self
       def create_or_update(f)
@@ -17,6 +18,21 @@ module Aggir
       def find_by_feed_url(feed_url)
         Feed.find :feed_url => feed_url
       end
+      
     end
+    def update_entries
+      raw_feed = FeedParser.parse(feed_url)
+      raw_feed.entries.each do |entry|
+        e = Aggir::Entry.new(:title => entry.title, :link => entry.link,
+                                :guid => entry.id, :content => entry.content.first.value,
+                                :summary => entry.summary, :published => entry.updated,
+                                :created => entry.updated, :feed => self)
+        #e.save
+        add_entry(e)
+        save
+      end
+      self
+    end
+    
   end
 end
