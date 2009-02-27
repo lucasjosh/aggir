@@ -20,14 +20,15 @@ module Aggir
       end
       
     end
+    
     def update_entries
       raw_feed = FeedParser.parse(feed_url)
       raw_feed.entries.each do |entry|
+        content = (entry.content && entry.content.first) ? entry.content.first.value : entry.summary
         e = Aggir::Entry.new(:title => entry.title, :link => entry.link,
-                                :guid => entry.id, :content => entry.content.first.value,
+                                :guid => entry.guid, :content => content,
                                 :summary => entry.summary, :published => entry.updated,
                                 :created => entry.updated, :feed => self)
-        #e.save
         add_entry(e)
         save
       end
