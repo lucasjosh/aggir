@@ -25,7 +25,7 @@ def db_clean_up
 end
 
 def setup_feed_data
-  str = open(File.join('data', 'blog.xml')).read
+  str = open(File.join(File.dirname(__FILE__),'data', 'blog.xml')).read
   data = FeedParser.parse(str)
   flexmock(FeedParser).should_receive(:parse).and_return(data)
 end

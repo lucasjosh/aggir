@@ -1,3 +1,5 @@
+require 'parsedate'
+
 module Aggir
   class Feed < Sequel::Model
     
@@ -25,12 +27,24 @@ module Aggir
       raw_feed = FeedParser.parse(feed_url)
       raw_feed.entries.each do |entry|
         content = (entry.content && entry.content.first) ? entry.content.first.value : entry.summary
-        e = Aggir::Entry.new(:title => entry.title, :link => entry.link,
-                                :guid => entry.guid, :content => content,
-                                :summary => entry.summary, :published => entry.updated,
-                                :created => entry.updated, :feed => self)
-        add_entry(e)
-        save
+        e = Aggir::Entry.find_guid(entry.guid)
+        unless e
+          e = Aggir::Entry.new(:title => entry.title, :link => entry.link,
+                                  :guid => entry.guid, :content => content,
+                                  :summary => entry.summary, :published => entry.updated,
+                                  :created => entry.updated, :feed => self)
+          add_entry(e)
+          save
+        else
+          res = ParseDate.parsedate(entry.updated)
+          ct = Time.local(*res)
+          if e.need_update?(ct)
+            e.save(:title => entry.title, :link => entry.link,
+                   :guid => entry.guid, :content => content,
+                   :summary => entry.summary, :published => entry.updated,
+                   :created => entry.updated, :feed => self)
+          end
+        end
       end
       self
     end

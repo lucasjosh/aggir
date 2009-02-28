@@ -6,10 +6,10 @@ require 'rake/rdoctask'
 
 
 task :default => ["update:feeds"]
-#http://www.searchenginecaffe.com/feeds/posts/default on hold
 
 URLS = %w(http://feeds2.feedburner.com/GeekingWithGreg
 http://feeds.feedburner.com/daniel-lemire/atom
+http://www.searchenginecaffe.com/feeds/posts/default
 http://thenoisychannel.com/feed/
 http://irgupf.com/feed/
 http://windowoffice.tumblr.com/rss
@@ -29,5 +29,11 @@ namespace :update do
         puts "URL: #{url} came back as nil!"
       end
     end
+  end
+end
+
+namespace :grab do
+  desc "Grab latest 10 headlines..."
+  task :latest do    
   end
 end

@@ -9,15 +9,7 @@ class FeedTest < Test::Unit::TestCase
     should "be a Sequel::Model class" do
       assert_equal Aggir::Feed.superclass, Sequel::Model
     end
-    
-    should "create a new Feed when not in DB" do
-      setup_feed_data
-      feed = Aggir::Feed.find_by_feed_url("http://www.lucasjosh.com/blog/feed/")
-      assert_nil feed
-      feed = Aggir::Feed.create_or_update("http://www.lucasjosh.com/blog/feed/")
-      assert_not_nil feed
-    end
-    
+        
     should "save correct data from Feed" do
       setup_feed_data
       feed = Aggir::Feed.create_or_update("http://www.lucasjosh.com/blog/feed/")
@@ -27,6 +19,25 @@ class FeedTest < Test::Unit::TestCase
       assert_equal "http://www.lucasjosh.com/blog/feed/", feed.feed_url
     end
     
+    should "create a new Feed when not in DB" do
+      setup_feed_data
+      feed = Aggir::Feed.create_or_update("http://www.lucasjosh.com/blog/feed/")
+      assert_not_nil feed
+    end    
+    
+  end
+  
+  context "Aggir::Feed" do
+    setup { db_setup }
+    
+    should "not add entries twice" do
+      setup_feed_data
+      feed = Aggir::Feed.create_or_update("http://www.lucasjosh.com/blog/feed/")
+      feed.update_entries
+      assert_equal 10, feed.entries.size
+      feed.update_entries
+      assert_equal 10, feed.entries.size
+    end
   end
 
 
