@@ -33,9 +33,20 @@ module Aggir
       
     end
   end
+  
+  class LinksMigrations < Sequel::Migration
+    def up
+      create_table :links do
+        primary_key :id
+        varchar :link
+        integer :entry_id
+      end
+    end
+  end
 end
 
  
 Aggir::FeedsMigrations.apply(DB, :up)
 Aggir::EntriesMigrations.apply(DB, :up)
+Aggir::LinksMigrations.apply(DB, :up)
 

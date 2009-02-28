@@ -33,7 +33,19 @@ namespace :update do
 end
 
 namespace :grab do
-  desc "Grab latest 10 headlines..."
-  task :latest do    
+  desc "Grab latest 15 headlines..."
+  task :latest do 
+    latest = Aggir::Entry.get_latest(15)
+    latest.each do |l|
+      puts "#{l.feed.title} - #{l.title}"
+    end   
+  end
+  
+  desc "Show latest PDFs"
+  task :pdf do
+    pdfs = Aggir::Link.get_latest
+    pdfs.each do |pdf|
+      puts "#{pdf.entry.feed.title}: #{pdf.entry.title} - #{pdf.link}"
+    end
   end
 end

@@ -33,7 +33,10 @@ module Aggir
                                   :guid => entry.guid, :content => content,
                                   :summary => entry.summary, :published => entry.updated,
                                   :created => entry.updated, :feed => self)
+          e.save
+          e.find_links
           add_entry(e)
+          puts "Adding #{e.title}"
           save
         else
           res = ParseDate.parsedate(entry.updated)

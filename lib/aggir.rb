@@ -16,6 +16,7 @@ end
  
 require File.dirname(__FILE__) + '/aggir/feed' unless defined?(Aggir::Feed)
 require File.dirname(__FILE__) + '/aggir/entry' unless defined?(Aggir::Entry)
+require File.dirname(__FILE__) + '/aggir/link' unless defined?(Aggir::Link)
  
 module Aggir
   VERSION = '0.0.1'
