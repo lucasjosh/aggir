@@ -23,7 +23,7 @@ module Aggir
       doc = Nokogiri::HTML(content)
       doc.xpath("//a").each do |link|
         url = link['href'].to_s
-        if url.index(/pdf/)
+        if url.index(/.pdf$/)
           add_link(Aggir::Link.new(:link => url))
         end
       end

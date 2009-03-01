@@ -43,9 +43,7 @@ namespace :feeds do
       end
     end    
   end
-end
-
-namespace :grab do
+  
   desc "Grab latest 15 headlines..."
   task :latest do 
     latest = Aggir::Entry.get_latest(15)
@@ -54,11 +52,26 @@ namespace :grab do
     end   
   end
   
+end
+
+namespace :pdf do
+  
   desc "Show latest PDFs"
-  task :pdf do
+  task :latest do
     pdfs = Aggir::Link.get_latest
     pdfs.each do |pdf|
       puts "#{pdf.entry.feed.title}: #{pdf.entry.title} - #{pdf.link}"
+    end
+  end
+  
+  desc "Download latest PDFs"
+  task :download do
+    download_dir = File.join(File.dirname(__FILE__), 'downloads')
+    FileUtils.mkdir(download_dir) unless File.exists?(download_dir)    
+    pdfs = Aggir::Link.get_latest
+    pdfs.each do |pdf|
+      puts "Downloading #{pdf.link}..."
+      pdf.download(download_dir)
     end
   end
 end
