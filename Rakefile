@@ -18,9 +18,22 @@ http://blogs.sun.com/searchguy/feed/entries/atom
 http://scienceblogs.com/goodmath/index.xml
 http://musicmachinery.com/feed/)
 
-namespace :update do
+namespace :feeds do
   desc "Update feeds..."
-  task :feeds do
+  task :update do
+    Aggir::Feed.all.each do |f|
+      f.update_entries
+    end
+  end
+  
+  task :add do
+    url = ENV['url']
+    raise StandardError.new("You must give a URL...") if url.blank?
+    Aggir::Feed.create_or_update(url)
+  end
+
+  desc "Creating default feeds..."
+  task :create do
     URLS.each do |url|
       f = Aggir::Feed.create_or_update(url)
       unless f.nil?
@@ -28,7 +41,7 @@ namespace :update do
       else
         puts "URL: #{url} came back as nil!"
       end
-    end
+    end    
   end
 end
 

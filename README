@@ -12,3 +12,10 @@ Solr ( http://lucene.apache.org/solr/ )
 For Testing:
 Shoulda ( http://thoughtbot.com/projects/shoulda )
 FlexMock
+
+
+Usage:
+
+rake feeds:create Creating the default feeds
+rake feeds:update Updating the feeds
+rake feeds:add url=URL Add url to the feeds
