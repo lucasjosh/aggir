@@ -2,18 +2,6 @@ Simple feed aggregator + search, focusing on developer / academic blogs.
 
 A database for your entries will be created in db/aggir.db at initial launch.
 
-Requirements :
-
-rfeedparser ( http://github.com/jmhodges/rfeedparser/tree/master )
-Sequel ( http://sequel.rubyforge.org )
-SQLite3 ( http://www.sqlite.org/ )
-Solr ( http://lucene.apache.org/solr/ )
-
-For Testing:
-Shoulda ( http://thoughtbot.com/projects/shoulda )
-FlexMock
-
-
 Usage:
 
 rake feeds:create Creating the default feeds
@@ -23,3 +11,15 @@ rake feeds:add url=URL Add url to the feeds
 
 rake pdf:latest Display latest PDF links
 rake pdf:download Download the PDFs into the downloads/ directory
+
+
+
+Requirements :
+rfeedparser ( http://github.com/jmhodges/rfeedparser/tree/master ) (Needs to be built)
+Sequel ( http://sequel.rubyforge.org )
+SQLite3 ( http://www.sqlite.org/ )
+Solr ( http://lucene.apache.org/solr/ )
+
+For Testing:
+Shoulda ( http://thoughtbot.com/projects/shoulda )
+FlexMock
