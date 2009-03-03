@@ -12,6 +12,9 @@ rake feeds:add url=URL Add url to the feeds
 rake pdf:latest Display latest PDF links
 rake pdf:download Download the PDFs into the downloads/ directory
 
+ruby aggir_server.rb (if you want to start a simple local instance of Sinatra)
+  http://localhost:4567
+
 
 
 Requirements :
@@ -19,6 +22,10 @@ rfeedparser ( http://github.com/jmhodges/rfeedparser/tree/master ) (Needs to be 
 Sequel ( http://sequel.rubyforge.org )
 SQLite3 ( http://www.sqlite.org/ )
 Solr ( http://lucene.apache.org/solr/ )
+
+For A Simple Web UI:
+sinatra
+haml
 
 For Testing:
 Shoulda ( http://thoughtbot.com/projects/shoulda )
