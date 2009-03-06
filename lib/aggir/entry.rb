@@ -10,8 +10,8 @@ module Aggir
         Entry.find :guid => guid
       end
       
-      def get_latest(num = 10)
-        Aggir::Entry.reverse_order(:published).limit(num)
+      def get_latest(page_num = 1)
+        Aggir::Entry.reverse_order(:published).paginate(page_num, 15)
       end
     end
     

@@ -2,3 +2,10 @@
   %a{:href => entry.link} 
     = entry.title
   %br/
+%br/
+- unless @entries.first_page?
+  %a{:href => "/#{@entries.prev_page}"}
+    = "<="
+- unless @entries.last_page?
+  %a{:href => "/#{@entries.next_page}"}
+    = "=>"
