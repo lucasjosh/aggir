@@ -21,7 +21,6 @@ Requirements :
 rfeedparser ( http://github.com/jmhodges/rfeedparser/tree/master ) (Needs to be built)
 Sequel ( http://sequel.rubyforge.org )
 SQLite3 ( http://www.sqlite.org/ )
-Solr ( http://lucene.apache.org/solr/ )
 
 For A Simple Web UI:
 sinatra
@@ -30,3 +29,10 @@ haml
 For Testing:
 Shoulda ( http://thoughtbot.com/projects/shoulda )
 FlexMock
+
+For Solr:
+Solr ( http://lucene.apache.org/solr/ )
+Tomcat (http://tomcat.apache.org)
+
+You will need to grab Tomcat / Solr.  Put the solr_config/aggir.xml into $TOMCAT_HOME/conf/Catalina/localhost/.  You'll need to update the solr_config/aggir.xml to point to the correct paths.  Soon, you'll be able to just set variables for this.
+
