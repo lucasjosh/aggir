@@ -75,3 +75,19 @@ namespace :pdf do
     end
   end
 end
+
+namespace :db do
+  desc "Update entries to have a hashed_guid"
+  task :hashed_guid do
+    require 'digest/md5'
+    entries = Aggir::Entry.all
+    entries.each do |entry|
+      unless entry.link.nil?
+        entry.hashed_guid = Digest::MD5.hexdigest(entry.link)
+        entry.save
+      else
+        puts "Link for Entry: #{entry.title} was nil"
+      end
+    end
+  end
+end

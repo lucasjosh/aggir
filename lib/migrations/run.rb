@@ -29,6 +29,7 @@ module Aggir
         datetime :created
         integer :feed_id
         varchar :guid
+        varchar :hashed_guid
       end      
       
     end

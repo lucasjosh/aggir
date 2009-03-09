@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'digest/md5'
 
 module Aggir
   class Entry < Sequel::Model
@@ -8,6 +9,11 @@ module Aggir
     class << self
       def find_guid(guid)
         Entry.find :guid => guid
+      end
+      
+      def find_hashed_guid(link)
+        h_guid = Digest::MD5.hexdigest(link)
+        Entry.find :hashed_guid => h_guid
       end
       
       def get_latest(page_num = 1)

@@ -32,7 +32,7 @@ module Aggir
           e = Aggir::Entry.new(:title => entry.title, :link => entry.link,
                                   :guid => entry.guid, :content => content,
                                   :summary => entry.summary, :published => entry.updated,
-                                  :created => entry.updated, :feed => self)
+                                  :created => entry.updated, :feed => self, :hashed_guid => Digest::MD5.hexdigest(entry.link))
           e.save
           e.find_links
           add_entry(e)
@@ -45,7 +45,7 @@ module Aggir
             e.save(:title => entry.title, :link => entry.link,
                    :guid => entry.guid, :content => content,
                    :summary => entry.summary, :published => entry.updated,
-                   :created => entry.updated, :feed => self)
+                   :created => entry.updated, :feed => self, :hashed_guid => Digest::MD5.hexdigest(entry.link))
           end
         end
       end

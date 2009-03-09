@@ -44,6 +44,15 @@ class EntryTest < Test::Unit::TestCase
       assert_equal "EarthLink, Short Term Profit but Long Term?", entry.title
     end
     
+    should "find by a hashed guid" do
+      setup_feed_data
+      feed = Aggir::Feed.create_or_update("http://www.lucasjosh.com/blog/feed/")
+      feed.update_entries
+      assert_equal "87c2dbb4400cc0009d0425118ee0bb95", feed.entries.first.hashed_guid
+      entry = Aggir::Entry.find_hashed_guid(feed.entries.first.link)
+      assert_equal "EarthLink, Short Term Profit but Long Term?", entry.title
+    end
+    
     should "not insert the same entry twice" do
       setup_feed_data
       entry = Aggir::Entry.find_guid("http://lucasjosh.com/blog/?p=260")
