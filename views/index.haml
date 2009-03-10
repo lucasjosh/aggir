@@ -1,6 +1,7 @@
 - @entries.each do |entry|
   %a{:href => entry.link} 
     = entry.title
+    = " - #{entry.feed.title}"
   %br/
 %br/
 - unless @entries.first_page?

@@ -15,8 +15,12 @@ module Aggir
       url = URI.parse(link)
       local_file = url.path.split("/").last
       unless File.exists?(File.join(download_dir, local_file))
-        str = open(link).read      
-        open(File.join(download_dir, local_file), "w") {|f| f << str}
+        begin
+          str = open(link).read      
+          open(File.join(download_dir, local_file), "w") {|f| f << str}
+        rescue
+          puts "Couldn't download #{link}"
+        end
       end
     end
   end

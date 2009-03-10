@@ -77,7 +77,18 @@ namespace :pdf do
     end
   end
   
-  desc "Download latest PDFs"
+  desc "Download All PDFs"
+  task :download_all do
+    download_dir = File.join(File.dirname(__FILE__), 'downloads')
+    FileUtils.mkdir(download_dir) unless File.exists?(download_dir)    
+    pdfs = Aggir::Link.all
+    pdfs.each do |pdf|
+      puts "Downloading #{pdf.link}..."
+      pdf.download(download_dir)
+    end
+  end
+  
+  desc "Download Latest PDFs" 
   task :download do
     download_dir = File.join(File.dirname(__FILE__), 'downloads')
     FileUtils.mkdir(download_dir) unless File.exists?(download_dir)    
@@ -85,7 +96,7 @@ namespace :pdf do
     pdfs.each do |pdf|
       puts "Downloading #{pdf.link}..."
       pdf.download(download_dir)
-    end
+    end    
   end
 end
 
