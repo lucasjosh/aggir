@@ -14,6 +14,8 @@ module Aggir
       str << "</doc>\n"
     end
     str << "</add>\n"
+    self.class.post('/update', {:headers => {"Content-Type" =>  "text/xml"}, :body => str})
+    self.class.post('/update', {:headers => {"Content-Type" =>  "text/xml"}, :body => "<commit/>"})
    end
    
    def search(query_params)

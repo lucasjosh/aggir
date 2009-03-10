@@ -52,6 +52,19 @@ namespace :feeds do
     end   
   end
   
+  task :update_search do
+    require 'cgi'
+    latest = Aggir::Entry.all
+    puts "Sending #{latest.size} entries to Solr..."
+    posts = []
+    latest.each do |l|
+      stripped_content = l.content.gsub(/<\/?[^>]*>/, "")
+      stripped_content = CGI.escapeHTML(stripped_content)
+      posts << {:id => l.hashed_guid, :title => l.title, :post => stripped_content, :link => l.link}
+    end
+    Aggir::Solr.new.update(posts)
+  end
+  
 end
 
 namespace :pdf do
