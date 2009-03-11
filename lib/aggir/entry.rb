@@ -32,7 +32,6 @@ module Aggir
         ret['Count'] = json['response']['numFound']
         ret['Entries'] = json['response']['docs'].map {|doc| {:title => doc['title'], :link => doc['link'], 
                                                                        :hashed_link => doc['id']}}
-        puts ret.inspect                                                               
         ret                                                            
       end      
       
