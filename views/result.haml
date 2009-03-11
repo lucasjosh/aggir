@@ -1,0 +1,12 @@
+= "#{@entries["Count"]} Total Results Found"
+%br/
+
+- @entries["Entries"].each do |entry|
+  %a{:href => entry[:link]} 
+    = entry[:title]
+  %br/
+%br/
+
+%br/
+%a{:href => "/"}
+  Back to Index

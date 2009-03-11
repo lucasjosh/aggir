@@ -1,12 +1,18 @@
+%form{:action => '/search'}
+  %input{:name => 'query', :type => 'text', :size => 30}
+  %input{:type => 'submit', :value => 'Search!'}
+
 - @entries.each do |entry|
   %a{:href => entry.link} 
     = entry.title
-    = " - #{entry.feed.title}"
+  = " - #{entry.feed.title}"
+  - unless entry.links.empty?
+    = " - PDF available"
   %br/
 %br/
 - unless @entries.first_page?
-  %a{:href => "/#{@entries.prev_page}"}
+  %a{:href => "/page/#{@entries.prev_page}"}
     = "<="
 - unless @entries.last_page?
-  %a{:href => "/#{@entries.next_page}"}
+  %a{:href => "/page/#{@entries.next_page}"}
     = "=>"

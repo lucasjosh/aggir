@@ -19,7 +19,7 @@ module Aggir
    end
    
    def search(query_params)
-     self.class.get('/select', {:query => {:q => query_params}})      
+     self.class.get('/select', {:query => {:q => query_params, :wt => 'json'}})      
    end
    
    private
