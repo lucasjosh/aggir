@@ -1,4 +1,4 @@
-= "#{@entries["Count"]} Total Results Found"
+= "#{@entries["Count"]} Total Results Found for #{@query}"
 %br/
 
 - @entries["Entries"].each do |entry|
@@ -7,6 +7,9 @@
   %br/
 %br/
 
+%br/
+%a{:href => "/search/#{@query}/#{@page_num.to_i + 1}"}
+  = "=>"
 %br/
 %a{:href => "/"}
   Back to Index

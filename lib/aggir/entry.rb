@@ -20,9 +20,9 @@ module Aggir
         Aggir::Entry.reverse_order(:published).paginate(page_num, 15)
       end
       
-      def search(query)
+      def search(query, page)
         
-        resp = Aggir::Solr.new.search(query)
+        resp = Aggir::Solr.new.search(query, page)
         json = JSON.parse(resp)
         parse_solr(json)
       end

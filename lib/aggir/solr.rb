@@ -18,8 +18,8 @@ module Aggir
     self.class.post('/update', {:headers => {"Content-Type" =>  "text/xml"}, :body => "<commit/>"})
    end
    
-   def search(query_params)
-     self.class.get('/select', {:query => {:q => query_params, :wt => 'json'}})      
+   def search(query_params, page = 0)
+     self.class.get('/select', {:query => {:q => query_params, :wt => 'json', :start => page}})      
    end
    
    private

@@ -8,10 +8,19 @@ get '/' do
   haml :index  
 end
 
-get '/search' do
-  query = params[:query]
-  @entries = Aggir::Entry.search(query)
+post '/search' do
+  #query, page_num = params[:splat]
+  @query = params[:query]
+  @page_num = params[:page_num] || '0'
+  @entries = Aggir::Entry.search(@query, @page_num)
   haml :result
+end
+
+get '/search/:query/:page_num' do
+  @query = params[:query]
+  @page_num = params[:page_num] || '0'
+  @entries = Aggir::Entry.search(@query, @page_num)
+  haml :result  
 end
 
 get '/feeds' do 
