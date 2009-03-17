@@ -57,34 +57,50 @@ module Aggir
       self
     end
     
+    def add_entry(e)
+      key = "#{Digest::MD5.hexdigest(url)}"
+      r = Redis.new
+      r.push_tail("feed:#{key}:entries", e.hashed_guid)
+    end
+    
+    def entries
+      key = "#{Digest::MD5.hexdigest(url)}"
+      r = Redis.new
+      ret_entries = Array.new
+      t_entries = r.list_range("feed:#{key}:entries", 0, -1)
+      t_entries.each do |entry|
+        ret_entries << Aggir::Entry.find_hash(entry)
+      end
+      ret_entries
+    end
+    
     def update_entries
-      raise StandardError, "Not Currently Implemented"
-      # raw_feed = FeedParser.parse(feed_url)
-      # raw_feed.entries.each do |entry|
-      #   content = (entry.content && entry.content.first) ? entry.content.first.value : entry.summary
-      #   e = Aggir::Entry.find_guid(entry.guid)
-      #   unless e
-      #     e = Aggir::Entry.new(:title => entry.title, :link => entry.link,
-      #                             :guid => entry.guid, :content => content,
-      #                             :summary => entry.summary, :published => entry.updated,
-      #                             :created => entry.updated, :feed => self, :hashed_guid => Digest::MD5.hexdigest(entry.link))
-      #     e.save
-      #     e.find_links
-      #     add_entry(e)
-      #     puts "Adding #{e.title}"
-      #     save
-      #   else
-      #     res = ParseDate.parsedate(entry.updated)
-      #     ct = Time.local(*res)
-      #     if e.need_update?(ct)
-      #       e.save(:title => entry.title, :link => entry.link,
-      #              :guid => entry.guid, :content => content,
-      #              :summary => entry.summary, :published => entry.updated,
-      #              :created => entry.updated, :feed => self, :hashed_guid => Digest::MD5.hexdigest(entry.link))
-      #     end
-      #   end
-      # end
-      # self
+      raw_feed = FeedParser.parse(feed_url)
+      raw_feed.entries.each do |entry|
+        content = (entry.content && entry.content.first) ? entry.content.first.value : entry.summary
+        e = Aggir::Entry.find_hash(entry.guid)
+        unless e
+          e = Aggir::Entry.new(:title => entry.title, :link => entry.link,
+                                  :guid => entry.guid, :content => content,
+                                  :summary => entry.summary, :published => entry.updated,
+                                  :created => entry.updated, :feed_id => self.id, :hashed_guid => Digest::MD5.hexdigest(entry.link))
+          e.save
+          #e.find_links
+          add_entry(e)
+          puts "Adding #{e.title}"
+          save
+        else
+          res = ParseDate.parsedate(entry.updated)
+          ct = Time.local(*res)
+          if e.need_update?(ct)
+            e.save(:title => entry.title, :link => entry.link,
+                   :guid => entry.guid, :content => content,
+                   :summary => entry.summary, :published => entry.updated,
+                   :created => entry.updated, :feed_id => self.id, :hashed_guid => Digest::MD5.hexdigest(entry.link))
+          end
+        end
+      end
+      self
     end
     
   end

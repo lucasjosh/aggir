@@ -2,19 +2,54 @@ require 'nokogiri'
 require 'digest/md5'
 require 'json'
 module Aggir
-  class Entry < Sequel::Model
-    many_to_one :feed, :class => "Aggir::Feed"
-    one_to_many :links, :class => "Aggir::Link"
+  class Entry 
+    
+    ENTRY_ID_KEY = "global:entry_id"
+    
+    attr_accessor :id, :title, :link, :name, :content
+    attr_accessor :summary, :published, :created, :feed_id, :guid
+    attr_accessor :hashed_guid
+    
+    def initialize(params)
+      params.each do |k, v|
+        self.send("#{k}=", v)
+      end
+    end
+    
+    def save
+      id = Entry.get_next_id unless id
+      h_guid = Digest::MD5.hexdigest(link)
+      r = Redis.new
+      r["entry:#{h_guid}"] = "#{title}|#{link}|#{content}|#{summary}|#{published}|#{created}|#{feed_id}|#{guid}|#{hashed_guid}"
+      r["entry:#{h_guid}:id"] = id
+      self
+    end    
     
     class << self
-      def find_guid(guid)
-        Entry.find :guid => guid
+      
+      def find(link)
+        h_guid = Digest::MD5.hexdigest(link)
+        find_hash(h_guid)
       end
       
-      def find_hashed_guid(link)
-        h_guid = Digest::MD5.hexdigest(link)
-        Entry.find :hashed_guid => h_guid
+      def find_hash(hashed_link)
+        r = Redis.new
+        if r.key?("entry:#{hashed_link}")
+          title, link, name, content, summary, published, created, feed_id, guid, hashed_guid = r["entry:#{hashed_link}"].split("|")
+          id = r["entry:#{hashed_link}:id"]
+          return Entry.new({:id => id, :title => title, :link => link, :name => name, :summary => summary,
+                            :content => content, :published => published, :created => created,
+                            :feed_id => feed_id, :guid => guid, :hashed_guid => hashed_guid})
+        end
+        nil        
       end
+      
+      def get_next_id
+        r = Redis.new
+        r.set_unless_exists ENTRY_ID_KEY, 1000
+        r.incr ENTRY_ID_KEY
+      end
+      
       
       def get_latest(page_num = 1)
         Aggir::Entry.reverse_order(:published).paginate(page_num, 15)
