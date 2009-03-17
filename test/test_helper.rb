@@ -1,27 +1,20 @@
 require 'rubygems'
-require 'sequel'
+require 'redis'
+
 require 'test/unit'
 require 'shoulda'
 
 require 'flexmock/test_unit'
 
-DB = Sequel.sqlite
+require 'digest/md5'
+
 
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 require 'aggir'
 
  
-def db_setup
-  
-  if DB.tables.empty?
-    puts "Running migrations...."
-    $:.unshift(File.dirname(__FILE__) + '/../lib')
-    require 'migrations/run'
-  end  
-end
-
-def db_clean_up
-  DB.disconnect
+def redis_setup
+  @r = Redis.new
 end
 
 def setup_feed_data
