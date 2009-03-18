@@ -4,10 +4,6 @@ class LinkTest < Test::Unit::TestCase
 
   context "Basic Aggir::Link" do
     
-    setup { db_setup }
-
-    should "be a Sequel::Model class" do
-      assert_equal Aggir::Link.superclass, Sequel::Model
-    end
+    setup { redis_setup }
   end
 end

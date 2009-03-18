@@ -15,7 +15,6 @@ http://irgupf.com/feed/
 http://windowoffice.tumblr.com/rss
 http://feeds.feedburner.com/stanfordinfoblog
 http://blogs.sun.com/searchguy/feed/entries/atom
-http://scienceblogs.com/goodmath/index.xml
 http://musicmachinery.com/feed/)
 
 namespace :feeds do
@@ -46,7 +45,7 @@ namespace :feeds do
   
   desc "Grab latest 15 headlines..."
   task :latest do 
-    latest = Aggir::Entry.get_latest(15)
+    latest = Aggir::Entry.get_latest
     latest.each do |l|
       puts "#{l.feed.title} - #{l.title}"
     end   

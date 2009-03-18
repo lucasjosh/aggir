@@ -5,11 +5,14 @@ require 'digest/md5'
 module Aggir
   class Feed
     
-    FEED_ID_KEY = "global:feed_id"
+    FEED_ID_KEY = "global:feed_id" unless defined? FEED_ID_KEY
+    FEED_PREFIX = "feed" unless defined? FEED_PREFIX
+    ENTRIES_PREFIX = "entries" unless defined? ENTRIES_PREFIX
+    
+    REDIS = Redis.new
     
     attr_accessor :r, :id, :title, :url, :feed_url
     
-    #one_to_many :entries, :class => "Aggir::Entry"
     def initialize(id, title, url, feed_url)
       @id = id
       @title = title
@@ -20,9 +23,8 @@ module Aggir
     
     class << self
       def get_next_id
-        r = Redis.new
-        r.set_unless_exists FEED_ID_KEY, 1000
-        r.incr FEED_ID_KEY
+        REDIS.set_unless_exists FEED_ID_KEY, 1000
+        REDIS.incr FEED_ID_KEY
       end
       
       def create_or_update(f)
@@ -37,37 +39,38 @@ module Aggir
       end
       
       def find_by_feed_url(feed_url)
-        r = Redis.new
         key = "#{Digest::MD5.hexdigest(feed_url)}"
-        if r.key?("feed:#{key}")
-          title, url, feed_url = r["feed:#{key}"].split("|")
-          id = r["feed:#{key}:id"]
+        find(key)
+      end
+      
+      def find(hashed_url)
+        if REDIS.key?("#{FEED_PREFIX}:#{hashed_url}")
+          title, url, feed_url = REDIS["#{FEED_PREFIX}:#{hashed_url}"].split("|")
+          id = REDIS["#{FEED_PREFIX}:#{hashed_url}:id"]
           return Feed.new(id, title, url, feed_url)
         end
-        nil
+        nil        
       end
       
     end
     
     def save
       key = "#{Digest::MD5.hexdigest(url)}"
-      r = Redis.new
-      r["feed:#{key}"] = "#{title}|#{url}|#{feed_url}"
-      r["feed:#{key}:id"] = id
+      REDIS["#{FEED_PREFIX}:#{key}"] = "#{title}|#{url}|#{feed_url}"
+      REDIS["#{FEED_PREFIX}:#{key}:id"] = id
       self
     end
     
     def add_entry(e)
       key = "#{Digest::MD5.hexdigest(url)}"
-      r = Redis.new
-      r.push_tail("feed:#{key}:entries", e.hashed_guid)
+      REDIS.push_tail("#{FEED_PREFIX}:#{key}:entries", e.hashed_guid)
+      REDIS.push_head("#{ENTRIES_PREFIX}:all", e.hashed_guid)
     end
     
     def entries
       key = "#{Digest::MD5.hexdigest(url)}"
-      r = Redis.new
       ret_entries = Array.new
-      t_entries = r.list_range("feed:#{key}:entries", 0, -1)
+      t_entries = REDIS.list_range("#{FEED_PREFIX}:#{key}:entries", 0, -1)
       t_entries.each do |entry|
         ret_entries << Aggir::Entry.find_hash(entry)
       end
@@ -78,17 +81,16 @@ module Aggir
       raw_feed = FeedParser.parse(feed_url)
       raw_feed.entries.each do |entry|
         content = (entry.content && entry.content.first) ? entry.content.first.value : entry.summary
-        e = Aggir::Entry.find_hash(entry.guid)
+        e = Aggir::Entry.find(entry.link)
         unless e
           e = Aggir::Entry.new(:title => entry.title, :link => entry.link,
                                   :guid => entry.guid, :content => content,
                                   :summary => entry.summary, :published => entry.updated,
-                                  :created => entry.updated, :feed_id => self.id, :hashed_guid => Digest::MD5.hexdigest(entry.link))
+                                  :created => entry.updated, :feed_id => Digest::MD5.hexdigest(url), :hashed_guid => Digest::MD5.hexdigest(entry.link))
           e.save
           #e.find_links
           add_entry(e)
-          puts "Adding #{e.title}"
-          save
+          puts "Adding #{e.title} - #{e.link}"
         else
           res = ParseDate.parsedate(entry.updated)
           ct = Time.local(*res)
@@ -96,7 +98,7 @@ module Aggir
             e.save(:title => entry.title, :link => entry.link,
                    :guid => entry.guid, :content => content,
                    :summary => entry.summary, :published => entry.updated,
-                   :created => entry.updated, :feed_id => self.id, :hashed_guid => Digest::MD5.hexdigest(entry.link))
+                   :created => entry.updated, :feed_id => Digest::MD5.hexdigest(url), :hashed_guid => Digest::MD5.hexdigest(entry.link))
           end
         end
       end

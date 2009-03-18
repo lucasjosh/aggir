@@ -2,8 +2,7 @@ require 'uri'
 require 'open-uri'
 
 module Aggir
-  class Link < Sequel::Model
-    many_to_one :entry, :class => "Aggir::Entry"
+  class Link
     
     class << self
       def get_latest(num = 10)

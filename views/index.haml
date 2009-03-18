@@ -6,13 +6,5 @@
   %a{:href => entry.link} 
     = entry.title
   = " - #{entry.feed.title}"
-  - unless entry.links.empty?
-    = " - PDF available"
   %br/
 %br/
-- unless @entries.first_page?
-  %a{:href => "/page/#{@entries.prev_page}"}
-    = "<="
-- unless @entries.last_page?
-  %a{:href => "/page/#{@entries.next_page}"}
-    = "=>"

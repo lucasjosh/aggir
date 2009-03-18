@@ -1,31 +1,50 @@
 require 'nokogiri'
 require 'digest/md5'
 require 'json'
+require 'parsedate'
+
 module Aggir
   class Entry 
     
-    ENTRY_ID_KEY = "global:entry_id"
+    ENTRY_ID_KEY = "global:entry_id" unless defined? ENTRY_ID_KEY
+    ENTRIES_PREFIX = "entries" unless defined? ENTRIES_PREFIX
+    ENTRY_PREFIX = "entry" unless defined? ENTRY_PREFIX
+    ENTRIES_LIST = "#{ENTRIES_PREFIX}:all"
+    
+    REDIS = Redis.new
     
     attr_accessor :id, :title, :link, :name, :content
     attr_accessor :summary, :published, :created, :feed_id, :guid
     attr_accessor :hashed_guid
+    attr_accessor :r, :feed
     
     def initialize(params)
-      params.each do |k, v|
-        self.send("#{k}=", v)
-      end
+      @id = params[:id] || ""
+      @title = params[:title] || ""
+      @link = params[:link] || ""
+      @name = params[:name] || ""
+      @content = params[:content] || ""
+      @summary = params[:summary] || ""
+      @published = params[:published] || ""
+      @created = params[:created] || ""
+      @feed_id = params[:feed_id] || ""
+      @guid = params[:guid] || ""
+      @hashed_guid = params[:hashed_guid] || "" 
     end
     
     def save
       id = Entry.get_next_id unless id
       h_guid = Digest::MD5.hexdigest(link)
-      r = Redis.new
-      r["entry:#{h_guid}"] = "#{title}|#{link}|#{content}|#{summary}|#{published}|#{created}|#{feed_id}|#{guid}|#{hashed_guid}"
-      r["entry:#{h_guid}:id"] = id
+      REDIS["#{ENTRY_PREFIX}:#{h_guid}"] = "#{title}|#{link}|#{name}|#{content}|#{summary}|#{published}|#{created}|#{feed_id}|#{guid}|#{hashed_guid}"
+      REDIS["#{ENTRY_PREFIX}:#{h_guid}:id"] = id
       self
     end    
     
-    class << self
+    def feed
+      Aggir::Feed.find(feed_id)
+    end
+    
+    class << self      
       
       def find(link)
         h_guid = Digest::MD5.hexdigest(link)
@@ -33,11 +52,11 @@ module Aggir
       end
       
       def find_hash(hashed_link)
-        r = Redis.new
-        if r.key?("entry:#{hashed_link}")
-          title, link, name, content, summary, published, created, feed_id, guid, hashed_guid = r["entry:#{hashed_link}"].split("|")
-          id = r["entry:#{hashed_link}:id"]
-          return Entry.new({:id => id, :title => title, :link => link, :name => name, :summary => summary,
+        
+        if REDIS.key?("#{ENTRY_PREFIX}:#{hashed_link}")
+          title, link, name, content, summary, published, created, feed_id, guid, hashed_guid = REDIS["#{ENTRY_PREFIX}:#{hashed_link}"].split("|")
+          id = REDIS["#{ENTRY_PREFIX}:#{hashed_link}:id"]
+          return Aggir::Entry.new({:id => id, :title => title, :link => link, :name => name, :summary => summary,
                             :content => content, :published => published, :created => created,
                             :feed_id => feed_id, :guid => guid, :hashed_guid => hashed_guid})
         end
@@ -45,14 +64,20 @@ module Aggir
       end
       
       def get_next_id
-        r = Redis.new
-        r.set_unless_exists ENTRY_ID_KEY, 1000
-        r.incr ENTRY_ID_KEY
+        REDIS.set_unless_exists ENTRY_ID_KEY, 1000
+        REDIS.incr ENTRY_ID_KEY
       end
       
       
       def get_latest(page_num = 1)
-        Aggir::Entry.reverse_order(:published).paginate(page_num, 15)
+        #Aggir::Entry.reverse_order(:published).paginate(page_num, 15)
+        ret_entries = Array.new
+        t_entries = REDIS.list_range(ENTRIES_LIST, page_num - 1, page_num * 15)
+        t_entries.each do |entry|
+          ret_entries << Aggir::Entry.find_hash(entry)
+        end
+        ret_entries
+        
       end
       
       def search(query, page)
@@ -73,7 +98,8 @@ module Aggir
     end
     
     def need_update?(publish_time)
-      published < publish_time
+      res = ParseDate.parsedate(published)
+      Time.local(*res) < publish_time
     end
     
     def find_links
