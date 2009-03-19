@@ -5,6 +5,7 @@ require 'lib/aggir'
 
 get '/' do
   @entries = Aggir::Entry.get_latest
+  @page_num = '1'
   haml :index  
 end
 
@@ -30,8 +31,8 @@ end
 
 
 get '/page/:page_num' do
-  pn = params[:page_num].to_i
-  @entries = Aggir::Entry.get_latest(pn)
+  @page_num = params[:page_num]
+  @entries = Aggir::Entry.get_latest(@page_num.to_i)
   haml :index
 end
 

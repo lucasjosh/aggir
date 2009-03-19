@@ -14,8 +14,8 @@ http://thenoisychannel.com/feed/
 http://irgupf.com/feed/
 http://windowoffice.tumblr.com/rss
 http://feeds.feedburner.com/stanfordinfoblog
-http://blogs.sun.com/searchguy/feed/entries/atom
-http://musicmachinery.com/feed/)
+http://musicmachinery.com/feed/
+http://blogs.sun.com/searchguy/feed/entries/atom)
 
 namespace :feeds do
   desc "Update feeds..."
@@ -23,6 +23,7 @@ namespace :feeds do
     Aggir::Feed.all.each do |f|
       f.update_entries
     end
+    Aggir::Feed.sort_entries
   end
   
   task :add do
@@ -40,7 +41,8 @@ namespace :feeds do
       else
         puts "URL: #{url} came back as nil!"
       end
-    end    
+    end 
+    Aggir::Feed.sort_entries   
   end
   
   desc "Grab latest 15 headlines..."

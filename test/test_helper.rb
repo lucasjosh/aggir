@@ -23,6 +23,7 @@ require 'aggir'
  
 def redis_setup
   @r = Redis.new
+  #@r.select_db(15)
   all_keys = @r.keys("test_*")
   all_keys.each do |key|
     puts "Deleting #{key}"

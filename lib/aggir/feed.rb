@@ -7,6 +7,7 @@ module Aggir
     
     FEED_ID_KEY = "global:feed_id" unless defined? FEED_ID_KEY
     FEED_PREFIX = "feed" unless defined? FEED_PREFIX
+    FEEDS_PREFIX = "feeds" unless defined? FEEDS_PREFIX
     ENTRIES_PREFIX = "entries" unless defined? ENTRIES_PREFIX
     
     REDIS = Redis.new
@@ -43,6 +44,13 @@ module Aggir
         find(key)
       end
       
+      def all
+        ret_entries = Array.new
+        t_entries = REDIS.list_range("#{FEEDS_PREFIX}:all", 0, -1)
+        t_entries.each {|entry| ret_entries << Feed.find(entry)}
+        ret_entries
+      end
+      
       def find(hashed_url)
         if REDIS.key?("#{FEED_PREFIX}:#{hashed_url}")
           title, url, feed_url = REDIS["#{FEED_PREFIX}:#{hashed_url}"].split("|")
@@ -52,12 +60,28 @@ module Aggir
         nil        
       end
       
+      def sort_entries
+        ret_entries = Array.new
+        t_entries = REDIS.list_range("#{ENTRIES_PREFIX}:all", 0, -1)
+        t_entries.each do |entry|
+          ret_entries << Aggir::Entry.find_hash(entry)
+        end
+        sorted_entries = ret_entries.sort {|a,b| 
+          a_res = ParseDate.parsedate(a.published)
+          b_res = ParseDate.parsedate(b.published)
+          Time.local(*b_res) <=> Time.local(*a_res)
+        }.collect {|a| a.hashed_guid}
+        REDIS.delete("#{ENTRIES_PREFIX}:sorted")
+        sorted_entries.each {|se| REDIS.push_tail("#{ENTRIES_PREFIX}:sorted", se)}
+      end
+      
     end
     
     def save
       key = "#{Digest::MD5.hexdigest(url)}"
       REDIS["#{FEED_PREFIX}:#{key}"] = "#{title}|#{url}|#{feed_url}"
       REDIS["#{FEED_PREFIX}:#{key}:id"] = id
+      REDIS.push_tail("#{FEEDS_PREFIX}:all", key)
       self
     end
     
@@ -95,6 +119,7 @@ module Aggir
           res = ParseDate.parsedate(entry.updated)
           ct = Time.local(*res)
           if e.need_update?(ct)
+            puts "Updating #{entry.title}"
             e.save(:title => entry.title, :link => entry.link,
                    :guid => entry.guid, :content => content,
                    :summary => entry.summary, :published => entry.updated,

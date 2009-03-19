@@ -35,7 +35,8 @@ module Aggir
     def save
       id = Entry.get_next_id unless id
       h_guid = Digest::MD5.hexdigest(link)
-      REDIS["#{ENTRY_PREFIX}:#{h_guid}"] = "#{title}|#{link}|#{name}|#{content}|#{summary}|#{published}|#{created}|#{feed_id}|#{guid}|#{hashed_guid}"
+      
+      REDIS["#{ENTRY_PREFIX}:#{h_guid}"] = "#{title.gsub("|", "-")}|#{link}|#{name}|#{content.gsub("\n", "").gsub("|","-")}|#{summary.gsub("\n", "").gsub("|","-")}|#{published}|#{created}|#{feed_id}|#{guid}|#{hashed_guid}"
       REDIS["#{ENTRY_PREFIX}:#{h_guid}:id"] = id
       self
     end    
@@ -71,8 +72,11 @@ module Aggir
       
       def get_latest(page_num = 1)
         #Aggir::Entry.reverse_order(:published).paginate(page_num, 15)
+  
         ret_entries = Array.new
-        t_entries = REDIS.list_range(ENTRIES_LIST, page_num - 1, page_num * 15)
+        start = (page_num == 1) ? 0 : page_num * 15
+        last = (page_num + 1) * 15
+        t_entries = REDIS.list_range("#{ENTRIES_PREFIX}:sorted", start, last)
         t_entries.each do |entry|
           ret_entries << Aggir::Entry.find_hash(entry)
         end
