@@ -73,14 +73,6 @@ end
 
 namespace :pdf do
   
-  desc "Show latest PDFs"
-  task :latest do
-    pdfs = Aggir::Link.get_latest
-    pdfs.each do |pdf|
-      puts "#{pdf.entry.feed.title}: #{pdf.entry.title} - #{pdf.link}"
-    end
-  end
-  
   desc "Download All PDFs"
   task :download_all do
     download_dir = File.join(File.dirname(__FILE__), 'downloads')
@@ -104,18 +96,3 @@ namespace :pdf do
   end
 end
 
-namespace :db do
-  desc "Update entries to have a hashed_guid"
-  task :hashed_guid do
-    require 'digest/md5'
-    entries = Aggir::Entry.all
-    entries.each do |entry|
-      unless entry.link.nil?
-        entry.hashed_guid = Digest::MD5.hexdigest(entry.link)
-        entry.save
-      else
-        puts "Link for Entry: #{entry.title} was nil"
-      end
-    end
-  end
-end

@@ -95,7 +95,6 @@ module Aggir
       
       
       def get_latest(page_num = 1)
-        #Aggir::Entry.reverse_order(:published).paginate(page_num, 15)
   
         ret_entries = Array.new
         start = (page_num == 1) ? 0 : page_num * 15
@@ -139,12 +138,19 @@ module Aggir
       Time.local(*res) < publish_time
     end
     
+    def add_link(new_link)
+      h_guid = Digest::MD5.hexdigest(link)
+      REDIS.push_head("#{ENTRY_PREFIX}:#{h_guid}:links", new_link.id)
+    end
+    
     def find_links
       doc = Nokogiri::HTML(content)
       doc.xpath("//a").each do |link|
         url = link['href'].to_s
         if url.index(/.pdf$/)
-          add_link(Aggir::Link.new(:link => url))
+          puts "Adding Link: #{url}"
+          l = Aggir::Link.new(url, hashed_guid).save
+          add_link(l)
         end
       end
       save

@@ -112,7 +112,7 @@ module Aggir
                                   :summary => entry.summary, :published => entry.updated,
                                   :created => entry.updated, :feed_id => Digest::MD5.hexdigest(url), :hashed_guid => Digest::MD5.hexdigest(entry.link))
           e.save
-          #e.find_links
+          e.find_links
           add_entry(e)
           puts "Adding #{e.title} - #{e.link}"
         else
