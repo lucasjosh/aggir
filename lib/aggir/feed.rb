@@ -120,10 +120,10 @@ module Aggir
           ct = Time.local(*res)
           if e.need_update?(ct)
             puts "Updating #{entry.title}"
-            e.save(:title => entry.title, :link => entry.link,
+            e.update({:title => entry.title, :link => entry.link,
                    :guid => entry.guid, :content => content,
                    :summary => entry.summary, :published => entry.updated,
-                   :created => entry.updated, :feed_id => Digest::MD5.hexdigest(url), :hashed_guid => Digest::MD5.hexdigest(entry.link))
+                   :created => entry.updated, :feed_id => Digest::MD5.hexdigest(url), :hashed_guid => Digest::MD5.hexdigest(entry.link)})
           end
         end
       end

@@ -33,6 +33,7 @@ module Aggir
     end
     
     def save
+      
       id = Entry.get_next_id unless id
       h_guid = Digest::MD5.hexdigest(link)
       
@@ -40,6 +41,29 @@ module Aggir
       REDIS["#{ENTRY_PREFIX}:#{h_guid}:id"] = id
       self
     end    
+    
+    def update(params)
+      id = params[:id] || @id
+      title = params[:title] || @title
+      link = params[:link] || @link
+      name = params[:name] || @name
+      content = params[:content] || @content
+      summary = params[:summary] || @summary
+      published = params[:published] || @published
+      created = params[:created] || @created
+      feed_id = params[:feed_id] || @feed_id
+      guid = params[:guid] || @guid
+      hashed_guid = params[:hashed_guid] || @hashed_guid
+      
+      id = Entry.get_next_id unless id
+      h_guid = Digest::MD5.hexdigest(link)
+      
+      REDIS["#{ENTRY_PREFIX}:#{h_guid}"] = "#{title.gsub("|", "-")}|#{link}|#{name}|#{content.gsub("\n", "").gsub("|","-")}|#{summary.gsub("\n", "").gsub("|","-")}|#{published}|#{created}|#{feed_id}|#{guid}|#{hashed_guid}"
+      REDIS["#{ENTRY_PREFIX}:#{h_guid}:id"] = id
+      self
+      
+      
+    end
     
     def feed
       Aggir::Feed.find(feed_id)
@@ -82,6 +106,15 @@ module Aggir
         end
         ret_entries
         
+      end
+      
+      def all
+        ret_entries = Array.new
+        t_entries = REDIS.list_range("#{ENTRIES_PREFIX}:all", 0, -1)
+        t_entries.each do |entry|
+          ret_entries << Aggir::Entry.find_hash(entry)
+        end
+        ret_entries
       end
       
       def search(query, page)
