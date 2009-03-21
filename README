@@ -1,6 +1,6 @@
 Simple feed aggregator + search, focusing on developer / academic blogs.
 
-A database for your entries will be created in db/aggir.db at initial launch.
+You will need a Redis server running locally for storage.
 
 Usage:
 
@@ -20,8 +20,7 @@ ruby aggir_server.rb (if you want to start a simple local instance of Sinatra)
 
 Requirements :
 rfeedparser ( http://github.com/jmhodges/rfeedparser/tree/master ) (Needs to be built)
-Sequel ( http://sequel.rubyforge.org )
-SQLite3 ( http://www.sqlite.org/ )
+Redis ( http://code.google.com/p/redis/ )
 
 For A Simple Web UI:
 sinatra

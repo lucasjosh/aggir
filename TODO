@@ -1,6 +1,0 @@
-- Take out all Sequel calls
-
-- Update models to use Redis
-
-- Make sure tests interact with Redis correctly
-
