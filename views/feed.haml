@@ -1,4 +1,10 @@
 - @feeds.each do |feed|
   %a{:href => feed.url} 
     = feed.title
+  %a{:href => "/feed/#{Digest::MD5.hexdigest(feed.url)}"}
+    Get Latest
   %br/
+%br/
+%a{:href => "/"}
+  Back to Index
+

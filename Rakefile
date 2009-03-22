@@ -47,7 +47,7 @@ namespace :feeds do
   
   desc "Grab latest 15 headlines..."
   task :latest do 
-    latest = Aggir::Entry.get_latest
+    latest = Aggir::Entry.latest
     latest.each do |l|
       puts "#{l.feed.title} - #{l.title}"
     end   
@@ -88,7 +88,7 @@ namespace :pdf do
   task :download do
     download_dir = File.join(File.dirname(__FILE__), 'downloads')
     FileUtils.mkdir(download_dir) unless File.exists?(download_dir)    
-    pdfs = Aggir::Link.get_latest
+    pdfs = Aggir::Link.latest
     pdfs.each do |pdf|
       puts "Downloading #{pdf.link}..."
       pdf.download(download_dir)

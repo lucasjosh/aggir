@@ -4,7 +4,7 @@ require 'sinatra'
 require 'lib/aggir'
 
 get '/' do
-  @entries = Aggir::Entry.get_latest
+  @entries = Aggir::Entry.latest
   @page_num = '1'
   haml :index  
 end
@@ -29,10 +29,16 @@ get '/feeds' do
   haml :feed
 end
 
+get '/feed/:hashed_url' do
+  @hashed_url = params[:hashed_url]
+  @entries = Aggir::Feed.latest(@hashed_url)
+  haml :feed_entries
+end
+
 
 get '/page/:page_num' do
   @page_num = params[:page_num]
-  @entries = Aggir::Entry.get_latest(@page_num.to_i)
+  @entries = Aggir::Entry.latest(@page_num.to_i)
   haml :index
 end
 

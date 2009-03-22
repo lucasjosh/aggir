@@ -12,7 +12,7 @@ module Aggir
     REDIS = Redis.new
     
     class << self
-      def get_latest(num = 15)
+      def latest(num = 15)
         #Link.reverse_order(:id).limit(num)
         ret_links = Array.new
         if REDIS.key?("#{LINKS_PREFIX}:all")
@@ -25,7 +25,7 @@ module Aggir
       end
       
       def all
-        get_latest(-1)
+        latest(-1)
       end
       
       def find(id)

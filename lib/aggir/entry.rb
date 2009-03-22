@@ -94,7 +94,7 @@ module Aggir
       end
       
       
-      def get_latest(page_num = 1)
+      def latest(page_num = 1)
   
         ret_entries = Array.new
         start = (page_num == 1) ? 0 : page_num * 15

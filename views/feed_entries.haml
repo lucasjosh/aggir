@@ -1,0 +1,11 @@
+- @entries.each do |entry|
+  %a{:href => entry.link} 
+    = entry.title
+  = " - #{entry.feed.title}"
+  %br/
+%br/
+%a{:href => "/feeds"}
+  Back to Feeds
+%br/
+%a{:href => "/"}
+  Back to Index

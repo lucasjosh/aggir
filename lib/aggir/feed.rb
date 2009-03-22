@@ -75,6 +75,20 @@ module Aggir
         sorted_entries.each {|se| REDIS.push_tail("#{ENTRIES_PREFIX}:sorted", se)}
       end
       
+      def latest(hashed_url)
+        page_num = 1
+        ret_entries = Array.new
+        start = (page_num == 1) ? 0 : page_num * 15
+        last = (page_num + 1) * 15
+        t_entries = REDIS.list_range("#{FEED_PREFIX}:#{hashed_url}:entries", start, last)
+        t_entries.each do |entry|
+          ret_entries << Aggir::Entry.find_hash(entry)
+        end
+        ret_entries
+
+      end
+      
+      
     end
     
     def save
@@ -128,7 +142,7 @@ module Aggir
         end
       end
       self
-    end
+    end    
     
   end
 end
