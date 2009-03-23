@@ -42,4 +42,15 @@ get '/page/:page_num' do
   haml :index
 end
 
+get '/pdfs' do
+  @pdfs = Aggir::Link.latest
+  haml :pdfs
+end
+
+get '/pdfs/all' do
+  @pdfs = Aggir::Link.all
+  haml :pdfs
+  
+end
+
 

@@ -1,6 +1,7 @@
 require 'uri'
 require 'open-uri'
 require 'digest/md5'
+require 'redis'
 
 module Aggir
   class Link
@@ -13,12 +14,12 @@ module Aggir
     
     class << self
       def latest(num = 15)
-        #Link.reverse_order(:id).limit(num)
         ret_links = Array.new
         if REDIS.key?("#{LINKS_PREFIX}:all")
           t_links = REDIS.list_range("#{LINKS_PREFIX}:all", 0, num)
-          t_links.each do |link|
-            ret_links << Aggir::Link.find(id)
+          t_links.each do |l|
+            al = Aggir::Link.find(l)
+            ret_links << al if al
           end
         end
         ret_links        
@@ -28,9 +29,9 @@ module Aggir
         latest(-1)
       end
       
-      def find(id)
-        if Redis.key?("#{LINK_PREFIX}:#{id}")
-          id, link, entry_id = REDIS["#{LINK_PREFIX}:#{id}"]
+      def find(link_id)
+        if REDIS.key?("#{LINK_PREFIX}:#{link_id}")
+          id, link, entry_id = REDIS["#{LINK_PREFIX}:#{link_id}"].split("|")
           return Link.new(link, entry_id)
         end
         nil
