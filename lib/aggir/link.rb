@@ -47,6 +47,7 @@ module Aggir
     def save
       REDIS["#{LINK_PREFIX}:#{id}"] = "#{id}|#{link}|#{entry_id}"
       REDIS.push_head("#{LINKS_PREFIX}:all", id)
+      self
     end
     
     def download(download_dir)

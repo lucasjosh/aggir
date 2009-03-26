@@ -73,10 +73,10 @@ module Aggir
       
       def find(link)
         h_guid = Digest::MD5.hexdigest(link)
-        find_hash(h_guid)
+        find_by_hash(h_guid)
       end
       
-      def find_hash(hashed_link)
+      def find_by_hash(hashed_link)
         
         if REDIS.key?("#{ENTRY_PREFIX}:#{hashed_link}")
           title, link, name, content, summary, published, created, feed_id, guid, hashed_guid = REDIS["#{ENTRY_PREFIX}:#{hashed_link}"].split("|")
@@ -101,19 +101,14 @@ module Aggir
         last = (page_num + 1) * 15
         t_entries = REDIS.list_range("#{ENTRIES_PREFIX}:sorted", start, last)
         t_entries.each do |entry|
-          ret_entries << Aggir::Entry.find_hash(entry)
+          ret_entries << Aggir::Entry.find_by_hash(entry)
         end
         ret_entries
         
       end
       
       def all
-        ret_entries = Array.new
-        t_entries = REDIS.list_range("#{ENTRIES_PREFIX}:all", 0, -1)
-        t_entries.each do |entry|
-          ret_entries << Aggir::Entry.find_hash(entry)
-        end
-        ret_entries
+        Aggir::RedisStorage.all("#{ENTRIES_PREFIX}:all", Aggir::Entry)
       end
       
       def search(query, page)

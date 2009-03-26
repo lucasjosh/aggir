@@ -45,10 +45,7 @@ module Aggir
       end
       
       def all
-        ret_entries = Array.new
-        t_entries = REDIS.list_range("#{FEEDS_PREFIX}:all", 0, -1)
-        t_entries.each {|entry| ret_entries << Feed.find(entry)}
-        ret_entries
+        Aggir::RedisStorage.all("#{FEEDS_PREFIX}:all", Aggir::Feed)
       end
       
       def find(hashed_url)
@@ -60,11 +57,15 @@ module Aggir
         nil        
       end
       
+      def find_by_hash(hashed_url)
+        find(hashed_url)
+      end
+      
       def sort_entries
         ret_entries = Array.new
         t_entries = REDIS.list_range("#{ENTRIES_PREFIX}:all", 0, -1)
         t_entries.each do |entry|
-          ret_entries << Aggir::Entry.find_hash(entry)
+          ret_entries << Aggir::Entry.find_by_hash(entry)
         end
         sorted_entries = ret_entries.sort {|a,b| 
           a_res = ParseDate.parsedate(a.published)
@@ -82,7 +83,7 @@ module Aggir
         last = (page_num + 1) * 15
         t_entries = REDIS.list_range("#{FEED_PREFIX}:#{hashed_url}:entries", start, last)
         t_entries.each do |entry|
-          ret_entries << Aggir::Entry.find_hash(entry)
+          ret_entries << Aggir::Entry.find_by_hash(entry)
         end
         ret_entries
 
@@ -110,7 +111,7 @@ module Aggir
       ret_entries = Array.new
       t_entries = REDIS.list_range("#{FEED_PREFIX}:#{key}:entries", 0, -1)
       t_entries.each do |entry|
-        ret_entries << Aggir::Entry.find_hash(entry)
+        ret_entries << Aggir::Entry.find_by_hash(entry)
       end
       ret_entries
     end
