@@ -12,6 +12,10 @@ module Aggir
         end
         ret      
       end
+      
+      def exists?(key)
+        REDIS.key?(key)
+      end
     end
   end
 end

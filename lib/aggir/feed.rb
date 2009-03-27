@@ -49,12 +49,16 @@ module Aggir
       end
       
       def find(hashed_url)
-        if REDIS.key?("#{FEED_PREFIX}:#{hashed_url}")
+        if exists?(hashed_url)
           title, url, feed_url = REDIS["#{FEED_PREFIX}:#{hashed_url}"].split("|")
           id = REDIS["#{FEED_PREFIX}:#{hashed_url}:id"]
           return Feed.new(id, title, url, feed_url)
         end
         nil        
+      end
+      
+      def exists?(hash)
+        Aggir::RedisStorage.exists?("#{FEED_PREFIX}:#{hash}")
       end
       
       def find_by_hash(hashed_url)

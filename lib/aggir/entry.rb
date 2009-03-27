@@ -78,7 +78,7 @@ module Aggir
       
       def find_by_hash(hashed_link)
         
-        if REDIS.key?("#{ENTRY_PREFIX}:#{hashed_link}")
+        if exists?(hashed_link)
           title, link, name, content, summary, published, created, feed_id, guid, hashed_guid = REDIS["#{ENTRY_PREFIX}:#{hashed_link}"].split("|")
           id = REDIS["#{ENTRY_PREFIX}:#{hashed_link}:id"]
           return Aggir::Entry.new({:id => id, :title => title, :link => link, :name => name, :summary => summary,
@@ -86,6 +86,10 @@ module Aggir
                             :feed_id => feed_id, :guid => guid, :hashed_guid => hashed_guid})
         end
         nil        
+      end
+      
+      def exists?(hashed_link)
+        Aggir::RedisStorage.exists?("#{ENTRY_PREFIX}:#{hashed_link}")
       end
       
       def get_next_id
