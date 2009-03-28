@@ -5,12 +5,16 @@ module Aggir
   
     class << self
       def all(key, klass)
+        latest(key, klass, 0, -1)
+      end
+      
+      def latest(key, klass, start, finish)
         ret = Array.new
-        t_all = REDIS.list_range(key, 0, -1)
+        t_all = REDIS.list_range(key, start, finish)
         t_all.each do |t|
           ret << klass.send(:find_by_hash, t)
         end
-        ret      
+        ret              
       end
       
       def exists?(key)

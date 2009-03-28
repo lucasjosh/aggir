@@ -98,17 +98,10 @@ module Aggir
       end
       
       
-      def latest(page_num = 1)
-  
-        ret_entries = Array.new
+      def latest(page_num = 1)  
         start = (page_num == 1) ? 0 : page_num * 15
         last = (page_num + 1) * 15
-        t_entries = REDIS.list_range("#{ENTRIES_PREFIX}:sorted", start, last)
-        t_entries.each do |entry|
-          ret_entries << Aggir::Entry.find_by_hash(entry)
-        end
-        ret_entries
-        
+        Aggir::RedisStorage.latest("#{ENTRIES_PREFIX}:sorted", Aggir::Entry, start, last)
       end
       
       def all

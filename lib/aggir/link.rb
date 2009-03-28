@@ -14,23 +14,19 @@ module Aggir
     
     class << self
       def latest(num = 15)
-        ret_links = Array.new
-        if REDIS.key?("#{LINKS_PREFIX}:all")
-          t_links = REDIS.list_range("#{LINKS_PREFIX}:all", 0, num)
-          t_links.each do |l|
-            al = Aggir::Link.find(l)
-            ret_links << al if al
-          end
-        end
-        ret_links        
+        REDIS.key?("#{LINKS_PREFIX}:all") ? Aggir::RedisStorage.latest("#{LINKS_PREFIX}:all", Aggir::Link, 0, num) : []
       end
       
       def all
-        latest(-1)
+        Aggir::RedisStorage.all("#{LINKS_PREFIX}:all", Aggir::Link)
+      end
+      
+      def exists?(hashed_link)
+        Aggir::RedisStorage.exists?("#{LINK_PREFIX}:#{hashed_link}")
       end
       
       def find(link_id)
-        if REDIS.key?("#{LINK_PREFIX}:#{link_id}")
+        if exists?(link_id)
           id, link, entry_id = REDIS["#{LINK_PREFIX}:#{link_id}"].split("|")
           return Link.new(link, entry_id)
         end

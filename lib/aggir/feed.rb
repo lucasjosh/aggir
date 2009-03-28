@@ -66,11 +66,7 @@ module Aggir
       end
       
       def sort_entries
-        ret_entries = Array.new
-        t_entries = REDIS.list_range("#{ENTRIES_PREFIX}:all", 0, -1)
-        t_entries.each do |entry|
-          ret_entries << Aggir::Entry.find_by_hash(entry)
-        end
+        ret_entries = Aggir::RedisStorage.all("#{ENTRIES_PREFIX}:all", Aggir::Entry)
         sorted_entries = ret_entries.sort {|a,b| 
           a_res = ParseDate.parsedate(a.published)
           b_res = ParseDate.parsedate(b.published)
@@ -85,15 +81,9 @@ module Aggir
         ret_entries = Array.new
         start = (page_num == 1) ? 0 : page_num * 15
         last = (page_num + 1) * 15
-        t_entries = REDIS.list_range("#{FEED_PREFIX}:#{hashed_url}:entries", start, last)
-        t_entries.each do |entry|
-          ret_entries << Aggir::Entry.find_by_hash(entry)
-        end
-        ret_entries
-
+        Aggir::RedisStorage.latest("#{FEED_PREFIX}:#{hashed_url}:entries", Aggir::Entry, start, last)
       end
-      
-      
+            
     end
     
     def save
