@@ -88,8 +88,8 @@ module Aggir
     
     def save
       key = "#{Digest::MD5.hexdigest(url)}"
-      REDIS["#{FEED_PREFIX}:#{key}"] = "#{title}|#{url}|#{feed_url}"
-      REDIS["#{FEED_PREFIX}:#{key}:id"] = id
+      Aggir::RedisStorage.save("#{FEED_PREFIX}:#{key}", "#{title}|#{url}|#{feed_url}")
+      Aggir::RedisStorage.save("#{FEED_PREFIX}:#{key}:id", id)
       REDIS.push_tail("#{FEEDS_PREFIX}:all", key)
       self
     end

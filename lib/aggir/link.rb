@@ -14,7 +14,7 @@ module Aggir
     
     class << self
       def latest(num = 15)
-        REDIS.key?("#{LINKS_PREFIX}:all") ? Aggir::RedisStorage.latest("#{LINKS_PREFIX}:all", Aggir::Link, 0, num) : []
+        Aggir::RedisStorage.exists?("#{LINKS_PREFIX}:all") ? Aggir::RedisStorage.latest("#{LINKS_PREFIX}:all", Aggir::Link, 0, num) : []
       end
       
       def all
@@ -41,7 +41,7 @@ module Aggir
     end
     
     def save
-      REDIS["#{LINK_PREFIX}:#{id}"] = "#{id}|#{link}|#{entry_id}"
+      Aggir::RedisStorage.save("#{LINK_PREFIX}:#{id}", "#{id}|#{link}|#{entry_id}")
       REDIS.push_head("#{LINKS_PREFIX}:all", id)
       self
     end

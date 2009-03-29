@@ -20,6 +20,10 @@ module Aggir
       def exists?(key)
         REDIS.key?(key)
       end
+      
+      def save(key, value)
+        REDIS[key] = value
+      end
     end
   end
 end

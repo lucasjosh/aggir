@@ -36,9 +36,8 @@ module Aggir
       
       id = Entry.get_next_id unless id
       h_guid = Digest::MD5.hexdigest(link)
-      
-      REDIS["#{ENTRY_PREFIX}:#{h_guid}"] = "#{title.gsub("|", "-")}|#{link}|#{name}|#{content.gsub("\n", "").gsub("|","-")}|#{summary.gsub("\n", "").gsub("|","-")}|#{published}|#{created}|#{feed_id}|#{guid}|#{hashed_guid}"
-      REDIS["#{ENTRY_PREFIX}:#{h_guid}:id"] = id
+      Aggir::RedisStorage.save("#{ENTRY_PREFIX}:#{h_guid}", "#{title.gsub("|", "-")}|#{link}|#{name}|#{content.gsub("\n", "").gsub("|","-")}|#{summary.gsub("\n", "").gsub("|","-")}|#{published}|#{created}|#{feed_id}|#{guid}|#{hashed_guid}")
+      Aggir::RedisStorage.save("#{ENTRY_PREFIX}:#{h_guid}:id", id)
       self
     end    
     
@@ -57,9 +56,8 @@ module Aggir
       
       id = Entry.get_next_id unless id
       h_guid = Digest::MD5.hexdigest(link)
-      
-      REDIS["#{ENTRY_PREFIX}:#{h_guid}"] = "#{title.gsub("|", "-")}|#{link}|#{name}|#{content.gsub("\n", "").gsub("|","-")}|#{summary.gsub("\n", "").gsub("|","-")}|#{published}|#{created}|#{feed_id}|#{guid}|#{hashed_guid}"
-      REDIS["#{ENTRY_PREFIX}:#{h_guid}:id"] = id
+      Aggir::RedisStorage.save("#{ENTRY_PREFIX}:#{h_guid}", "#{title.gsub("|", "-")}|#{link}|#{name}|#{content.gsub("\n", "").gsub("|","-")}|#{summary.gsub("\n", "").gsub("|","-")}|#{published}|#{created}|#{feed_id}|#{guid}|#{hashed_guid}")
+      Aggir::RedisStorage.save("#{ENTRY_PREFIX}:#{h_guid}:id", id)
       self
       
       
