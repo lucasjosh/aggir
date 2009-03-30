@@ -10,8 +10,6 @@ module Aggir
     
     attr_accessor :id, :link, :entry_id
     
-    REDIS = Redis.new
-    
     class << self
       def latest(num = 15)
         Aggir::RedisStorage.exists?("#{LINKS_PREFIX}:all") ? Aggir::RedisStorage.latest("#{LINKS_PREFIX}:all", Aggir::Link, 0, num) : []
@@ -27,7 +25,7 @@ module Aggir
       
       def find(link_id)
         if exists?(link_id)
-          id, link, entry_id = REDIS["#{LINK_PREFIX}:#{link_id}"].split("|")
+          id, link, entry_id = Aggir::RedisStorage.get("#{LINK_PREFIX}:#{link_id}").split("|")
           return Link.new(link, entry_id)
         end
         nil
@@ -42,7 +40,7 @@ module Aggir
     
     def save
       Aggir::RedisStorage.save("#{LINK_PREFIX}:#{id}", "#{id}|#{link}|#{entry_id}")
-      REDIS.push_head("#{LINKS_PREFIX}:all", id)
+      Aggir::RedisStorage.push_to_front("#{LINKS_PREFIX}:all", id)
       self
     end
     

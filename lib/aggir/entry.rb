@@ -11,8 +11,6 @@ module Aggir
     ENTRY_PREFIX = "entry" unless defined? ENTRY_PREFIX
     ENTRIES_LIST = "#{ENTRIES_PREFIX}:all"
     
-    REDIS = Redis.new
-    
     attr_accessor :id, :title, :link, :name, :content
     attr_accessor :summary, :published, :created, :feed_id, :guid
     attr_accessor :hashed_guid
@@ -77,8 +75,8 @@ module Aggir
       def find_by_hash(hashed_link)
         
         if exists?(hashed_link)
-          title, link, name, content, summary, published, created, feed_id, guid, hashed_guid = REDIS["#{ENTRY_PREFIX}:#{hashed_link}"].split("|")
-          id = REDIS["#{ENTRY_PREFIX}:#{hashed_link}:id"]
+          title, link, name, content, summary, published, created, feed_id, guid, hashed_guid = Aggir::RedisStorage.get("#{ENTRY_PREFIX}:#{hashed_link}").split("|")
+          id = Aggir::RedisStorage.get("#{ENTRY_PREFIX}:#{hashed_link}:id")
           return Aggir::Entry.new({:id => id, :title => title, :link => link, :name => name, :summary => summary,
                             :content => content, :published => published, :created => created,
                             :feed_id => feed_id, :guid => guid, :hashed_guid => hashed_guid})
@@ -91,8 +89,7 @@ module Aggir
       end
       
       def get_next_id
-        REDIS.set_unless_exists ENTRY_ID_KEY, 1000
-        REDIS.incr ENTRY_ID_KEY
+        Aggir::RedisStorage.get_next_id(ENTRY_ID_KEY)
       end
       
       
@@ -130,7 +127,7 @@ module Aggir
     
     def add_link(new_link)
       h_guid = Digest::MD5.hexdigest(link)
-      REDIS.push_head("#{ENTRY_PREFIX}:#{h_guid}:links", new_link.id)
+      Aggir::RedisStorage.push_to_front("#{ENTRY_PREFIX}:#{h_guid}:links", new_link.id)
     end
     
     def find_links

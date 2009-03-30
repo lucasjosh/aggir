@@ -24,6 +24,27 @@ module Aggir
       def save(key, value)
         REDIS[key] = value
       end
+      
+      def get(key)
+        REDIS[key]
+      end
+      
+      def delete(key)
+        REDIS.delete(key)
+      end
+      
+      def push_to_front(key, value)
+        REDIS.push_head(key, value)
+      end
+      
+      def push_to_end(key, value)
+        REDIS.push_tail(key, value)
+      end
+      
+      def get_next_id(key)
+        REDIS.set_unless_exists key, 1000
+        REDIS.incr key        
+      end
     end
   end
 end

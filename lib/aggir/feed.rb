@@ -10,8 +10,6 @@ module Aggir
     FEEDS_PREFIX = "feeds" unless defined? FEEDS_PREFIX
     ENTRIES_PREFIX = "entries" unless defined? ENTRIES_PREFIX
     
-    REDIS = Redis.new
-    
     attr_accessor :r, :id, :title, :url, :feed_url
     
     def initialize(id, title, url, feed_url)
@@ -24,8 +22,7 @@ module Aggir
     
     class << self
       def get_next_id
-        REDIS.set_unless_exists FEED_ID_KEY, 1000
-        REDIS.incr FEED_ID_KEY
+        Aggir::RedisStorage.get_next_id(FEED_ID_KEY)
       end
       
       def create_or_update(f)
@@ -50,8 +47,8 @@ module Aggir
       
       def find(hashed_url)
         if exists?(hashed_url)
-          title, url, feed_url = REDIS["#{FEED_PREFIX}:#{hashed_url}"].split("|")
-          id = REDIS["#{FEED_PREFIX}:#{hashed_url}:id"]
+          title, url, feed_url = Aggir::RedisStorage.get("#{FEED_PREFIX}:#{hashed_url}").split("|")
+          id = Aggir::RedisStorage.get("#{FEED_PREFIX}:#{hashed_url}:id")
           return Feed.new(id, title, url, feed_url)
         end
         nil        
@@ -72,8 +69,8 @@ module Aggir
           b_res = ParseDate.parsedate(b.published)
           Time.local(*b_res) <=> Time.local(*a_res)
         }.collect {|a| a.hashed_guid}
-        REDIS.delete("#{ENTRIES_PREFIX}:sorted")
-        sorted_entries.each {|se| REDIS.push_tail("#{ENTRIES_PREFIX}:sorted", se)}
+        Aggir::RedisStorage.delete("#{ENTRIES_PREFIX}:sorted")
+        sorted_entries.each {|se| Aggir::RedisStorage.push_to_end("#{ENTRIES_PREFIX}:sorted", se)}
       end
       
       def latest(hashed_url)
@@ -90,24 +87,19 @@ module Aggir
       key = "#{Digest::MD5.hexdigest(url)}"
       Aggir::RedisStorage.save("#{FEED_PREFIX}:#{key}", "#{title}|#{url}|#{feed_url}")
       Aggir::RedisStorage.save("#{FEED_PREFIX}:#{key}:id", id)
-      REDIS.push_tail("#{FEEDS_PREFIX}:all", key)
+      Aggir::RedisStorage.push_to_end("#{FEEDS_PREFIX}:all", key)
       self
     end
     
     def add_entry(e)
       key = "#{Digest::MD5.hexdigest(url)}"
-      REDIS.push_tail("#{FEED_PREFIX}:#{key}:entries", e.hashed_guid)
-      REDIS.push_head("#{ENTRIES_PREFIX}:all", e.hashed_guid)
+      Aggir::RedisStorage.push_to_end("#{FEED_PREFIX}:#{key}:entries", e.hashed_guid)
+      Aggir::RedisStorage.push_to_front("#{ENTRIES_PREFIX}:all", e.hashed_guid)
     end
     
     def entries
       key = "#{Digest::MD5.hexdigest(url)}"
-      ret_entries = Array.new
-      t_entries = REDIS.list_range("#{FEED_PREFIX}:#{key}:entries", 0, -1)
-      t_entries.each do |entry|
-        ret_entries << Aggir::Entry.find_by_hash(entry)
-      end
-      ret_entries
+      Aggir::RedisStorage.all("#{FEED_PREFIX}:#{key}:entries", Aggir::Entry)
     end
     
     def update_entries
