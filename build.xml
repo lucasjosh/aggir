@@ -7,7 +7,6 @@
     <!-- ====================================================== -->
     <property name="javac.debug" value="on" />
     <property name="javac.optimize" value="on" />
-    <!--<property name="javac.deprecation" value="on" />-->
     <property name="javac.version" value="1.6" />
     <property name="javac.args" value="-Xlint" />
     
