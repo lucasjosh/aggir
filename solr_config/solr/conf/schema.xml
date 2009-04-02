@@ -307,7 +307,7 @@
    <field name="title" type="text" indexed="true" stored="true" required="true"/>
    <field name="post" type="text" indexed="true" stored="false" multiValued="true"/>
    <field name="link" type="textTight" indexed="true" stored="true" />
-
+   <field name="keywords" type="text" indexed="true" stored="false" multiValued="true" />
 
    <!-- Here, default is used to create a "timestamp" field indicating
         When each document was indexed.

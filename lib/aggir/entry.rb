@@ -130,6 +130,19 @@ module Aggir
       Aggir::RedisStorage.push_to_front("#{ENTRY_PREFIX}:#{h_guid}:links", new_link.id)
     end
     
+    def find_keywords
+      keywords = Array.new
+      doc = Nokogiri::HTML(content)
+      d = Aggir::Delicious.new
+      doc.xpath("//a").each do |link|
+        url = link['href'].to_s
+        puts "URL => #{url}"
+        kwd = d.keywords(url)
+        keywords << kwd if kwd
+      end
+      keywords
+    end
+    
     def find_links
       doc = Nokogiri::HTML(content)
       doc.xpath("//a").each do |link|

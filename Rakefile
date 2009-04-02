@@ -69,6 +69,12 @@ namespace :feeds do
     #Aggir::Solr.new.update(posts)
   end
   
+  desc "Find Entry keywords from Delicious"
+  task :find_keywords do
+    Aggir::Entry.latest.each do |e|
+      puts e.find_keywords.inspect
+    end
+  end
 end
 
 namespace :pdf do
