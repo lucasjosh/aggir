@@ -140,7 +140,21 @@ module Aggir
         kwd = d.keywords(url)
         keywords << kwd if kwd
       end
-      keywords
+      break_down_keywords(keywords)
+    end
+    
+    def break_down_keywords(keywords, floor = 0.5, ceiling = 0.8)
+      ret_keywords = Array.new
+      keywords.each do |num, kwds|
+        if num.to_i > 1
+          kwds.each do |key, value|
+            num = 1 if num = '0'
+            num = value.to_f / num.to_i
+            ret_keywords << key if floor < num && num > ceiling
+          end
+        end
+      end
+      ret_keywords.uniq
     end
     
     def find_links
