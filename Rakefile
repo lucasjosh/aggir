@@ -63,7 +63,9 @@ namespace :feeds do
       posts = []
       stripped_content = l.content.gsub(/<\/?[^>]*>/, "")
       stripped_content = CGI.escapeHTML(stripped_content)
-      posts << {:id => l.hashed_guid, :title => l.title, :post => stripped_content, :link => l.link}
+      keywords = l.find_keywords
+      posts << {:id => l.hashed_guid, :title => l.title, 
+                :post => stripped_content, :link => l.link, :keywords => keywords.join(" ")}
       Aggir::Solr.new.update(posts)
     end
     #Aggir::Solr.new.update(posts)
