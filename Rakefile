@@ -77,6 +77,20 @@ namespace :feeds do
       puts e.find_keywords.inspect
     end
   end
+  
+  desc "Show Last 10 Feeds"
+  task :latest_feeds do
+    Aggir::Feed.most_recent.each do |f|
+      puts "#{f.title} - #{f.entries.size} Posts"
+    end
+  end
+  
+  desc "Show Number of posts for all feeds"
+  task :all_feeds do
+    Aggir::Feed.all.each do |f|
+      puts "#{f.title} - #{f.entries.size} Posts"
+    end
+  end
 end
 
 namespace :pdf do

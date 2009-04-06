@@ -148,7 +148,7 @@ module Aggir
       keywords.each do |num, kwds|
         if num.to_i > 1
           kwds.each do |key, value|
-            num = 1 if num = '0'
+            num = 1 if num == '0'
             num = value.to_f / num.to_i
             ret_keywords << key if floor < num && num > ceiling
           end

@@ -80,6 +80,10 @@ module Aggir
         last = (page_num + 1) * 15
         Aggir::RedisStorage.latest("#{FEED_PREFIX}:#{hashed_url}:entries", Aggir::Entry, start, last)
       end
+      
+      def most_recent
+        Aggir::RedisStorage.latest("#{FEEDS_PREFIX}:all", Aggir::Feed, -10, -1).reverse
+      end
             
     end
     
