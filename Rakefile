@@ -5,7 +5,7 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 
-task :default => ["update:feeds"]
+task :default => ["feeds:update"]
 
 URLS = %w(http://feeds2.feedburner.com/GeekingWithGreg
 http://feeds.feedburner.com/daniel-lemire/atom
