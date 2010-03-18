@@ -55,6 +55,9 @@ namespace :feeds do
   
   desc "Sending all entries to Solr..."
   task :update_search do
+    data_dir = File.join(File.dirname(__FILE__), 'solr_config', 'solr', 'data')
+    FileUtils.mkdir(data_dir) unless File.exists?(data_dir)    
+
     require 'cgi'
     latest = Aggir::Entry.all
     puts "Sending #{latest.size} entries to Solr..."
@@ -115,6 +118,37 @@ namespace :pdf do
       puts "Downloading #{pdf.link}..."
       pdf.download(download_dir)
     end    
+  end
+end
+
+namespace :tomcat do
+  desc "process and install the aggir.xml file"
+  task "context" do
+    raise "missing CATALINA_HOME" unless tomcat_home = ENV['CATALINA_HOME']
+    path = "#{tomcat_home}/conf/Catalina/localhost/aggir.xml"
+
+    context = File.read("solr_config/aggir.xml")
+    here = File.expand_path File.dirname(__FILE__)
+    context.gsub!("%SOLR_DIR%", "#{here}/solr_config")
+    File.open(path, "w") { |f| f.print context }
+  end
+
+  desc "run Tomcat's startup.sh"
+  task "start" do
+    raise "missing CATALINA_HOME" unless tomcat_home = ENV['CATALINA_HOME']
+    puts exe = "#{tomcat_home}/bin/startup.sh"
+    Dir.chdir("solr_config/solr") do
+      system exe
+    end
+  end
+
+  desc "run Tomcat's shutdown.sh"
+  task "stop" do
+    raise "missing CATALINA_HOME" unless tomcat_home = ENV['CATALINA_HOME']
+    puts exe = "#{tomcat_home}/bin/shutdown.sh"
+    Dir.chdir("solr_config/solr") do
+      system exe
+    end
   end
 end
 
